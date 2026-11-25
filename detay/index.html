@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Otağ · MasterLabs proje önerisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Courier+Prime:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Düzen fikri: sunum bir çekim senaryosu. Her bölüm, iki kenarında sahne numarası olan
+   bir sahne başlığıyla açılır; üstteki şerit zaman kodunu ve bulunulan sahneyi gösterir.
+   Anlatımı çizimler taşır, metin yalnızca başlık ve kısa satırlardır.
+   Renk anlam taşır: kor = lokal, çelik = bulut. Tek ve koyu bir görünüm, bilinçli tercih. */
+:root {
+  color-scheme: dark;
+  --ink: #15120f;
+  --hide: #1e1a16;
+  --hide-2: #28221c;
+  --line: #3a3229;
+  --parchment: #ebe2d0;
+  --dust: #a89c88;
+  --ember: #e0913f;
+  --steel: #8db0bd;
+  --good: #93c08b;
+  --mid: #dcb960;
+  --bad: #d97865;
+  --display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --script: "Courier Prime", "Courier New", Courier, monospace;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --bar-h: 40px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 12px); }
+body { margin: 0; background: var(--ink); color: var(--parchment); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: var(--ember); }
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+
+/* Çizimler */
+.il { display: block; width: 100%; height: auto; }
+.st { fill: none; stroke: var(--parchment); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.st-d { stroke: var(--dust); } .st-e { stroke: var(--ember); } .st-s { stroke: var(--steel); } .st-l { stroke: var(--line); }
+.dash { stroke-dasharray: 4 5; }
+.fl-e { fill: var(--ember); stroke: none; } .fl-s { fill: var(--steel); stroke: none; }
+.fl-h { fill: var(--hide-2); stroke: none; } .fl-p { fill: var(--parchment); stroke: none; } .fl-d { fill: var(--dust); stroke: none; }
+.fl-i { fill: var(--ink); stroke: none; }
+.svg-t { font: 700 11px var(--script); letter-spacing: .1em; fill: var(--dust); }
+
+/* Üst şerit */
+.bar {
+  position: fixed; inset: 0 0 auto 0; z-index: 20;
+  height: calc(var(--bar-h) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--gutter-r) 0 var(--gutter-l);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: rgba(21, 18, 15, .92); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  font: 400 13px/1 var(--script); letter-spacing: .04em; color: var(--dust);
+}
+.bar__where { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.8; }
+.bar__where b { color: var(--parchment); font-weight: 700; }
+.bar__tc { color: var(--ember); font-variant-numeric: tabular-nums; flex: none; }
+.bar__tc::before { content: "● "; font-size: 10px; vertical-align: 1px; }
+.bar__progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--ember); }
+
+/* Sahne iskeleti */
+.scene { border-bottom: 1px solid var(--line); }
+.scene__in {
+  max-width: 1080px; margin-inline: auto;
+  padding-left: var(--gutter-l); padding-right: var(--gutter-r);
+  padding-block: clamp(52px, 8vw, 96px);
+  display: flex; flex-direction: column; gap: clamp(22px, 3.5vw, 36px);
+}
+.slug { display: flex; align-items: baseline; gap: 14px; font: 700 14px/1.3 var(--script); letter-spacing: .06em; color: var(--ember); }
+.slug__no { flex: none; color: var(--dust); font-variant-numeric: tabular-nums; }
+.slug__text { flex: 1; min-width: 0; }
+h2 { font: 800 clamp(38px, 7vw, 68px)/1 var(--display); letter-spacing: .005em; text-wrap: balance; max-width: 18ch; }
+h3 { font: 600 24px/1.1 var(--display); letter-spacing: .02em; }
+.lede { font-size: clamp(18px, 2.2vw, 21px); line-height: 1.5; max-width: 52ch; }
+.cap { font: 400 14px/1.5 var(--script); color: var(--dust); max-width: 60ch; }
+.cap b { color: var(--ember); font-weight: 700; }
+.grid { display: grid; gap: 16px; }
+.grid--3, .routes { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 700px) { .grid--3, .routes { grid-template-columns: 1fr; } }
+.grid > * { min-width: 0; }
+.card { background: var(--hide); border: 1px solid var(--line); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.card p { color: var(--dust); font-size: 16px; line-height: 1.45; }
+.card .il { margin-bottom: 6px; }
+.w3 { stroke-width: 3.5; } .w5 { stroke-width: 5; }
+.pal-ember { --sky: #3a2111; --sun: #f1b56a; --far: #5b3215; --mid: #40230f; --near: #24160d; --tent: #e0913f; }
+.pal-steel { --sky: #17303a; --sun: #cfe6ee; --far: #2a5262; --mid: #1d3c48; --near: #101d22; --tent: #8db0bd; }
+.pal-mute { --sky: #221d18; --sun: #6b6052; --far: #2e2720; --mid: #29231d; --near: #1a1612; --tent: #5a5045; }
+
+/* Platform ekranı ve motor */
+.build { max-width: 860px; }
+.mock { border: 1px solid var(--dust); background: var(--hide); }
+.mock__bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid var(--line); font: 400 12px/1 var(--script); letter-spacing: .06em; color: var(--dust); }
+.mock__bar i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.mock__bar i:nth-child(3) { background: var(--ember); }
+.mock__bar span { margin-left: 8px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.8; }
+.mock__body { display: grid; grid-template-columns: 150px minmax(0, 1fr); }
+.mock__side { border-right: 1px solid var(--line); padding: 12px; display: flex; flex-direction: column; gap: 4px; font: 500 14px/1.2 var(--body); color: var(--dust); }
+.mock__side span { padding: 7px 8px; }
+.mock__side .is-on { background: var(--hide-2); color: var(--parchment); box-shadow: inset 2px 0 0 var(--ember); }
+.mock__main { padding: 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.shot { background: var(--hide-2); border: 1px solid var(--line); min-width: 0; }
+.shot__meta { padding: 8px; display: flex; flex-direction: column; gap: 6px; font: 400 11px/1.2 var(--script); color: var(--dust); }
+.shot__meta b { color: var(--parchment); font: 600 15px/1.1 var(--display); letter-spacing: .02em; }
+.chip { align-self: flex-start; padding: 3px 6px; border: 1px solid currentColor; font: 700 10px/1 var(--script); letter-spacing: .06em; }
+.chip--ok { color: var(--good); } .chip--run { color: var(--ember); } .chip--wait { color: var(--dust); }
+.meter { height: 3px; background: var(--line); }
+.meter i { display: block; height: 100%; width: var(--v, 0%); background: var(--ember); }
+.engine { position: relative; margin-top: 26px; border: 1px solid var(--ember); background: var(--hide); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.engine::before { content: ""; position: absolute; left: 50%; top: -27px; width: 1px; height: 26px; background: var(--ember); }
+.engine__slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.gpu { border: 1px solid var(--line); background: var(--hide-2); padding: 7px; height: 46px; display: flex; align-items: flex-end; gap: 3px; min-width: 0; }
+.gpu i { flex: 1; height: var(--v); background: var(--ember); opacity: .85; }
+@media (max-width: 620px) {
+  .mock__body { grid-template-columns: 1fr; } .mock__side { display: none; }
+  .mock__main { gap: 6px; padding: 8px; } .shot__meta { padding: 6px; }
+}
+.tag { font: 700 12px/1 var(--script); letter-spacing: .1em; color: var(--dust); }
+.tag--ember { color: var(--ember); } .tag--steel { color: var(--steel); }
+
+/* 1. Açılış */
+.hero .scene__in { padding-top: calc(var(--bar-h) + clamp(32px, 6vw, 72px)); }
+.hero__top { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.hero__text { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.hero h1 { font: 800 clamp(84px, 20vw, 200px)/.82 var(--display); letter-spacing: -.01em; }
+.hero h1 span { color: var(--ember); }
+.hero__sub { font: 600 clamp(24px, 3.6vw, 36px)/1.12 var(--display); max-width: 20ch; text-wrap: balance; }
+@media (max-width: 760px) { .hero__top { grid-template-columns: 1fr; } .hero__art { max-width: 420px; } }
+.slate { border: 1px solid var(--line); background: var(--hide); max-width: 720px; }
+.slate__sticks { height: 18px; background: repeating-linear-gradient(-55deg, var(--parchment) 0 22px, var(--ink) 22px 44px); opacity: .9; }
+.slate__cells { display: grid; grid-template-columns: repeat(4, 1fr); }
+.slate__cell { padding: 12px 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 0; }
+.slate__cell:nth-child(4n) { border-right: 0; }
+@media (max-width: 620px) { .slate__cells { grid-template-columns: repeat(2, 1fr); } .slate__cell:nth-child(2n) { border-right: 0; } }
+.slate dt { font: 400 11px/1 var(--script); letter-spacing: .12em; color: var(--dust); margin-bottom: 7px; }
+.slate dd { font: 700 16px/1.25 var(--script); }
+
+/* 3. Motor + platform, film şeridi */
+.stack { max-width: 760px; }
+.strip { background: var(--hide); border: 1px solid var(--line); padding-block: 18px; position: relative; }
+.strip::before, .strip::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 8px;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 10px, transparent 10px 22px);
+}
+.strip::before { top: 5px; } .strip::after { bottom: 5px; }
+.strip ol { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; padding-inline: 8px; }
+.strip li { background: var(--hide-2); padding: 14px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; text-align: center; }
+.strip li svg { width: 46px; height: 46px; }
+.strip li b { font: 600 17px/1.1 var(--display); letter-spacing: .03em; }
+@media (max-width: 620px) { .strip ol { grid-template-columns: repeat(3, 1fr); } }
+
+/* 4. Üç yol */
+.routes { display: grid; gap: 16px; }
+.routes > * { min-width: 0; }
+.routecard { --route: var(--steel); border-top: 3px solid var(--route); }
+.routecard--local { --route: var(--ember); }
+.routecard .tag { color: var(--route); }
+.routecard .il { max-width: 380px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; min-width: 600px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.35; }
+tr:last-child th, tr:last-child td { border-bottom: 0; }
+thead th { font: 700 12px/1.2 var(--script); letter-spacing: .1em; color: var(--steel); background: var(--hide); }
+thead th:first-child { color: var(--dust); } thead th.c-local { color: var(--ember); }
+tbody th { font-weight: 500; width: 28%; }
+td { color: var(--dust); }
+td::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; background: var(--mid); }
+td.g::before { background: var(--good); } td.b::before { background: var(--bad); }
+@media (max-width: 620px) {
+  table { min-width: 0; font-size: 13px; table-layout: fixed; }
+  th, td { padding: 9px 6px; overflow-wrap: anywhere; }
+  thead th { font-size: 10px; letter-spacing: .03em; }
+  tbody th { width: 31%; }
+  td::before { width: 7px; height: 7px; margin-right: 5px; }
+}
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 400 13px/1.3 var(--script); color: var(--dust); }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; background: var(--mid); }
+.legend .g::before { background: var(--good); } .legend .b::before { background: var(--bad); }
+
+/* 5. Neden lokal */
+.reason { border-top: 3px solid var(--ember); }
+.reason .il { max-width: 260px; }
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.verdict > div { padding: 18px 20px; border: 1px solid var(--line); background: var(--hide-2); min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.verdict p { font-size: 16px; color: var(--dust); }
+
+/* 6. Yol haritası: basamak grafiği */
+.steps { display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; height: 210px; border-bottom: 1px solid var(--dust); }
+.step { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; min-width: 0; padding-inline: 5px; }
+.step i { display: block; height: var(--h); background: var(--c, var(--ember)); }
+.step--open i { background: repeating-linear-gradient(-55deg, var(--hide-2) 0 8px, var(--hide) 8px 16px); border: 1px dashed var(--dust); border-bottom: 0; }
+.step + .step::before { content: "◆"; position: absolute; left: -6px; top: 0; bottom: 0; width: 12px; font-size: 11px; line-height: 1; color: var(--ember); text-align: center; background: linear-gradient(var(--line), var(--line)) center / 1px 100% no-repeat; }
+.steplabels { display: grid; grid-template-columns: repeat(5, 1fr); }
+.steplabels li { padding: 10px 5px 0; min-width: 0; }
+.steplabels b { display: block; font: 800 34px/.9 var(--display); color: var(--ember); }
+.steplabels span { display: block; font: 600 clamp(13px, 2.3vw, 19px)/1.1 var(--display); letter-spacing: .02em; margin-top: 6px; overflow-wrap: anywhere; }
+.steplabels small { display: block; font: 400 12px/1.3 var(--script); color: var(--dust); margin-top: 4px; }
+.acts { border: 1px solid var(--line); }
+.act { display: grid; grid-template-columns: 44px minmax(0, 190px) minmax(0, 1fr); gap: 4px 18px; align-items: baseline; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--hide); }
+.act:last-child { border-bottom: 0; }
+.act__no { font: 800 30px/1 var(--display); color: var(--ember); }
+.act p { font-size: 16px; color: var(--dust); }
+@media (max-width: 620px) { .act { grid-template-columns: 34px minmax(0, 1fr); } .act p { grid-column: 2; } }
+
+/* 7. İlk film */
+.player { max-width: 860px; border: 1px solid var(--dust); background: var(--ink); }
+.player__screen { position: relative; }
+.player__play { position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: rgba(21, 18, 15, .72); border: 2px solid var(--parchment); }
+.player__play::after { content: ""; position: absolute; left: 25px; top: 18px; border-left: 18px solid var(--parchment); border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+.player__bar { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--line); font: 400 12px/1 var(--script); letter-spacing: .06em; color: var(--dust); }
+.player__bar b { color: var(--ember); font-weight: 700; flex: none; }
+.player__bar .meter { flex: 1; min-width: 0; }
+.player__bar span { flex: none; font-variant-numeric: tabular-nums; }
+.weeks { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: var(--hide); }
+.weeks li { padding: 16px; border-right: 1px solid var(--line); min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.weeks li:last-child { border-right: 0; }
+.weeks svg { width: 44px; height: 44px; }
+.weeks i { font: 700 12px/1 var(--script); letter-spacing: .1em; color: var(--ember); font-style: normal; }
+.weeks b { font: 600 20px/1.1 var(--display); letter-spacing: .02em; }
+@media (max-width: 620px) { .weeks { grid-template-columns: repeat(2, 1fr); } .weeks li:nth-child(2n) { border-right: 0; } .weeks li:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+.ticks li { position: relative; padding-left: 22px; margin-bottom: 6px; font-size: 16px; color: var(--dust); line-height: 1.4; }
+.ticks li::before { content: "→"; position: absolute; left: 0; color: var(--ember); font-family: var(--script); }
+
+/* 8. Riskler */
+.risks { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; border: 1px solid var(--line); }
+.risk { padding: 18px 20px; background: var(--hide); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.risk p { font-size: 16px; color: var(--dust); line-height: 1.45; }
+.risk p::before { content: "→ "; color: var(--good); font-family: var(--script); }
+
+/* 9. Kapanış */
+.ask { border: 1px solid var(--ember); padding: clamp(22px, 4vw, 40px); display: flex; flex-direction: column; gap: 14px; background: var(--hide); }
+.ask h3 { font-size: clamp(30px, 5vw, 48px); line-height: 1.04; text-wrap: balance; max-width: 20ch; }
+.ask p { color: var(--dust); max-width: 56ch; }
+.fade { text-align: right; font: 700 15px/1 var(--script); letter-spacing: .08em; color: var(--dust); }
+.credits { font: 400 13px/1.6 var(--script); color: var(--dust); }
+.logo { display: block; width: 230px; max-width: 62%; height: auto; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Aynı sahne: renkleri kullanan öğenin paletinden gelir -->
+    <symbol id="shot" viewBox="0 0 320 180">
+      <rect width="320" height="180" style="fill:var(--sky)"/>
+      <circle cx="226" cy="70" r="46" style="fill:var(--sun);opacity:.18"/>
+      <circle cx="226" cy="70" r="24" style="fill:var(--sun)"/>
+      <path d="M0 118l44-30 36 22 52-48 48 40 40-22 44 30 56-34v104H0Z" style="fill:var(--far)"/>
+      <path d="M170 152q64-56 150-34v62H170Z" style="fill:var(--mid)"/>
+      <path d="M246 120V98h6v-5h5v5h8v-5h5v5h8v-5h5v5h5v22Z" style="fill:var(--near)"/>
+      <path d="M0 142q80-20 160-6t160-8v52H0Z" style="fill:var(--near)"/>
+      <path d="M28 144v-7q12-12 24 0v7Z" style="fill:var(--tent);opacity:.6"/>
+      <path d="M138 142v-9q14-14 28 0v9Z" style="fill:var(--tent);opacity:.75"/>
+      <path d="M68 142v-15q27-27 54 0v15Z" style="fill:var(--tent)"/>
+      <path d="M68 127h54" style="fill:none;stroke:var(--near);stroke-width:1.5"/>
+      <path d="M89 142v-10q6-6 12 0v10Z" style="fill:var(--near)"/>
+      <path d="M95 106V88" style="fill:none;stroke:var(--tent);stroke-width:1.5"/>
+      <path d="M95 88l15 4-15 4Z" style="fill:var(--tent)"/>
+      <path d="M52 48l6 4 6-4M76 38l5 3 5-3M40 62l4 3 4-3" style="fill:none;stroke:var(--sun);stroke-width:1.2;opacity:.7"/>
+    </symbol>
+    <!-- Günümüzde geçen sahne: şehir, gece -->
+    <symbol id="shot-city" viewBox="0 0 320 180">
+      <rect width="320" height="180" style="fill:var(--sky)"/>
+      <circle cx="252" cy="40" r="30" style="fill:var(--sun);opacity:.18"/>
+      <circle cx="252" cy="40" r="14" style="fill:var(--sun)"/>
+      <path d="M0 124V84H22V70H40V94H56V62H80V94H94V76H114V94H132V54H158V94H174V70H196V94H214V80H238V94H258V66H280V90H320V124Z" style="fill:var(--far)"/>
+      <path d="M0 150V110H30V96H56V116H78V88H108V116H134V100H158V122H186V92H214V116H238V104H264V122H294V108H320V150Z" style="fill:var(--mid)"/>
+      <g style="fill:var(--tent)"><rect x="36" y="102" width="4" height="5"/><rect x="44" y="102" width="4" height="5"/><rect x="84" y="94" width="4" height="5"/><rect x="92" y="94" width="4" height="5"/><rect x="84" y="104" width="4" height="5"/><rect x="140" y="106" width="4" height="5"/><rect x="192" y="98" width="4" height="5"/><rect x="200" y="98" width="4" height="5"/><rect x="192" y="108" width="4" height="5"/><rect x="244" y="110" width="4" height="5"/><rect x="300" y="114" width="4" height="5"/></g>
+      <rect y="150" width="320" height="30" style="fill:var(--near)"/>
+      <path d="M0 166h320" style="fill:none;stroke:var(--sun);stroke-width:1.5;stroke-dasharray:10 10;opacity:.35"/>
+      <path d="M112 162v-6h7l5-6h18l6 6h8v6Z" style="fill:var(--tent)"/>
+      <circle cx="124" cy="162" r="3.5" style="fill:var(--sky)"/><circle cx="148" cy="162" r="3.5" style="fill:var(--sky)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="bar" aria-hidden="true">
+  <span class="bar__where" id="where"><b>SAHNE 01/09</b> · AÇILIŞ</span>
+  <span class="bar__tc" id="tc">00:00:00:00</span>
+  <span class="bar__progress" id="progress"></span>
+</div>
+
+<main>
+
+<!-- 1 -->
+<section class="scene hero" id="s1" data-name="AÇILIŞ">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">1</span><span class="slug__text">İÇ. BEYKOZ – YENİ BİR STÜDYO – GÜN</span><span class="slug__no">1</span></p>
+    <div class="hero__top">
+      <div class="hero__text">
+        <h1>OTA<span>Ğ</span></h1>
+        <p class="hero__sub">Bozdağ Film'in kendi dünyasını, kendi çatısı altında üreten yapay zekâ stüdyosu.</p>
+      </div>
+      <svg class="il hero__art" viewBox="0 0 400 320" role="img" aria-label="Vizörden görünen bir otağ çadırı">
+        <!-- vizör köşeleri -->
+        <path class="st st-d" d="M20 50V20h30M350 20h30v30M380 270v30h-30M50 300H20v-30"/>
+        <circle class="fl-e" cx="44" cy="44" r="5"/><text class="svg-t" x="56" y="48">REC</text>
+        <text class="svg-t" x="312" y="48">24 FPS</text>
+        <!-- ufuk ve tepeler -->
+        <path class="st st-l" d="M20 236h360"/>
+        <path class="st st-d" d="M20 236l60-46 44 30 50-58 40 44"/>
+        <path class="st st-d" d="M270 208l44-34 66 62"/>
+        <circle class="st st-d" cx="318" cy="96" r="20"/>
+        <!-- otağ -->
+        <path class="fl-h" d="M112 176Q200 78 288 176V256H112Z"/>
+        <path class="st" d="M112 176Q200 78 288 176"/>
+        <path class="st" d="M112 176V256H288V176Z"/>
+        <path class="st st-d" d="M112 196h66M222 196h66"/>
+        <path class="st st-l" d="M124 196l16 60M146 196l16 60M140 196l-16 60M162 196l-16 60M238 196l16 60M260 196l16 60M254 196l-16 60M276 196l-16 60"/>
+        <path class="fl-e" d="M178 256V204q22-22 44 0v52Z"/>
+        <path class="st" d="M192 118h16"/>
+        <path class="st" d="M200 118V78"/>
+        <path class="fl-e" d="M200 78l30 9-30 9Z"/>
+        <path class="st st-d" d="M60 256h280"/>
+      </svg>
+    </div>
+    <dl class="slate">
+      <div class="slate__sticks"></div>
+      <div class="slate__cells">
+        <div class="slate__cell"><dt>HAZIRLAYAN</dt><dd>MasterLabs</dd></div>
+        <div class="slate__cell"><dt>KİME</dt><dd>Bozdağ Film</dd></div>
+        <div class="slate__cell"><dt>OKUMA</dt><dd>3 dk</dd></div>
+        <div class="slate__cell"><dt>İSTENEN KARAR</dt><dd>1</dd></div>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="scene" id="s2" data-name="FIRSAT">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">2</span><span class="slug__text">DIŞ. RİVA PLATOSU – ŞAFAK</span><span class="slug__no">2</span></p>
+    <h2>Araçlar herkeste var. Bu dünya yalnızca sizde.</h2>
+    <div class="grid grid--3">
+      <div class="card">
+        <svg class="il" viewBox="0 0 240 150" aria-hidden="true">
+          <rect class="fl-h" width="240" height="150"/>
+          <path class="st st-d" d="M10 24V10h14M216 10h14v14M230 126v14h-14M24 140H10v-14"/>
+          <!-- şerit -->
+          <rect class="fl-i" x="72" y="92" width="150" height="34"/><rect class="st" x="72" y="92" width="150" height="34"/>
+          <path class="st st-d" stroke-dasharray="3 5" d="M76 96h144M76 122h144"/>
+          <rect class="fl-h" x="112" y="100" width="30" height="18"/><rect class="fl-h" x="148" y="100" width="30" height="18"/><rect class="fl-h" x="184" y="100" width="30" height="18"/>
+          <path class="fl-e" d="M115 116l8-9 5 5 4-4 7 8Z"/>
+          <circle class="fl-e" cx="163" cy="109" r="5"/>
+          <path class="fl-e" d="M190 116v-5q9-9 18 0v5Z"/>
+          <!-- makara -->
+          <circle class="fl-i" cx="74" cy="70" r="40"/><circle class="st" cx="74" cy="70" r="40"/>
+          <circle class="st st-d" cx="74" cy="70" r="33"/>
+          <g class="fl-h"><circle cx="74" cy="48" r="9"/><circle cx="95" cy="63" r="9"/><circle cx="87" cy="88" r="9"/><circle cx="61" cy="88" r="9"/><circle cx="53" cy="63" r="9"/></g>
+          <g class="st st-d"><circle cx="74" cy="48" r="9"/><circle cx="95" cy="63" r="9"/><circle cx="87" cy="88" r="9"/><circle cx="61" cy="88" r="9"/><circle cx="53" cy="63" r="9"/></g>
+          <circle class="fl-e" cx="74" cy="70" r="5"/>
+          <!-- arşiv kutuları -->
+          <rect class="st st-l" x="150" y="30" width="60" height="16"/><rect class="st st-l" x="158" y="50" width="52" height="16"/><rect class="st st-l" x="144" y="70" width="66" height="16"/>
+          <path class="st st-d" d="M156 38h18M164 58h14M150 78h22"/>
+        </svg>
+        <h3>Arşiv</h3><p>Kuruluş: Osman'dan Destan'a, yılların kostümü, dekoru, ışığı.</p>
+      </div>
+      <div class="card">
+        <svg class="il" viewBox="0 0 240 150" aria-hidden="true">
+          <rect class="fl-h" width="240" height="150"/>
+          <path class="st st-d" d="M10 24V10h14M216 10h14v14M230 126v14h-14M24 140H10v-14"/>
+          <!-- arkadaki siluetler -->
+          <g style="fill:var(--line)"><circle cx="52" cy="92" r="13"/><path d="M22 150q2-32 30-32t30 32Z"/><circle cx="188" cy="92" r="13"/><path d="M158 150q2-32 30-32t30 32Z"/></g>
+          <!-- öndeki karakter -->
+          <path class="fl-i" d="M70 150q4-44 50-44t50 44Z"/><path class="st" d="M70 150q4-44 50-44t50 44"/>
+          <path class="fl-i" d="M99 66v24q4 12 21 18 17-6 21-18V66Z"/><path class="st st-d" d="M99 66v24q4 12 21 18 17-6 21-18V66"/>
+          <ellipse class="fl-h" cx="120" cy="74" rx="16" ry="20"/><ellipse class="st" cx="120" cy="74" rx="16" ry="20"/>
+          <path class="fl-e" d="M97 68q0-32 23-32t23 32Z"/>
+          <path class="st st-e" d="M120 36V22"/><path class="fl-e" d="M120 22l12 4-12 4Z"/>
+          <path class="st w3" style="stroke:var(--ember)" d="M120 68v14"/>
+          <!-- yüz takip kutusu -->
+          <path class="st st-e" d="M84 40V28h12M144 28h12v12M156 98v12h-12M96 110H84V98"/>
+          <path class="st st-e dash" d="M156 69h22"/><circle class="fl-e" cx="182" cy="69" r="3"/>
+        </svg>
+        <h3>Karakterler</h3><p>Seyircinin tanıdığı yüzler.</p>
+      </div>
+      <div class="card">
+        <svg class="il" viewBox="0 0 240 150" aria-hidden="true">
+          <rect class="fl-h" width="240" height="150"/>
+          <path class="st st-d" d="M10 24V10h14M216 10h14v14M230 126v14h-14M24 140H10v-14"/>
+          <circle class="st st-d" cx="186" cy="38" r="12"/>
+          <!-- ışık hüzmesi -->
+          <path d="M206 74L138 92v30h62Z" style="fill:var(--ember);opacity:.14"/>
+          <!-- kale dekoru -->
+          <path class="fl-i" d="M26 122V62h8v-8h8v8h8v-8h8v8h8v60Z"/><path class="st" d="M26 122V62h8v-8h8v8h8v-8h8v8h8v60"/>
+          <path class="fl-i" d="M66 122V84h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v38Z"/><path class="st" d="M66 84h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v38"/>
+          <path class="fl-e" d="M84 122v-16q9-9 18 0v16Z"/>
+          <path class="st st-d" d="M40 78v10M52 78v10"/>
+          <!-- otağ -->
+          <path class="fl-i" d="M138 122v-22q26-26 52 0v22Z"/><path class="st" d="M138 122v-22q26-26 52 0v22"/>
+          <path class="st st-d" d="M138 100h52"/>
+          <path class="fl-h" d="M158 122v-12q6-6 12 0v12Z"/><path class="st st-d" d="M158 122v-12q6-6 12 0v12"/>
+          <!-- set ışığı -->
+          <path class="st" d="M214 122V84M206 122l8-12 8 12"/>
+          <path class="fl-e" d="M202 68l18-6 5 16-18 6Z"/>
+          <path class="st st-d" d="M16 122h208"/>
+        </svg>
+        <h3>Plato</h3><p>Gerçek setler, tek çatı.</p>
+      </div>
+    </div>
+    <p class="cap"><b>Bugün yapılabilen:</b> çekimden önce sahneyi görmek, storyboard canlandırmak, diziler ve plato etkinlikleri için tanıtım filmleri, atmosferik kısa filmler.</p>
+    <p class="cap"><b>Neden şimdi:</b> yeni projelerin geliştirildiği dönem, çekimden önce sahneyi görmenin en çok işe yaradığı zamandır.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="scene" id="s3" data-name="NE KURUYORUZ">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">3</span><span class="slug__text">İÇ. KURGU ODASI – GECE</span><span class="slug__no">3</span></p>
+    <h2>Bir motor, üstünde bir platform.</h2>
+    <div class="build" role="img" aria-label="Üstte ekibin kullandığı platform ekranı, altta görüntüyü üreten motor">
+      <div class="mock">
+        <div class="mock__bar"><i></i><i></i><i></i><span>OTAĞ · PLATFORM · Çekimler</span></div>
+        <div class="mock__body">
+          <div class="mock__side"><span>Projeler</span><span class="is-on">Çekimler</span><span>Karakterler</span><span>Mekânlar</span><span>Üretim sırası</span></div>
+          <div class="mock__main">
+            <div class="shot pal-ember"><svg class="il" viewBox="0 0 320 180"><use href="#shot"/></svg><div class="shot__meta"><b>Otağ · gün batımı</b><span class="chip chip--ok">ONAYLANDI</span><div class="meter" style="--v:100%"><i></i></div></div></div>
+            <div class="shot pal-steel"><svg class="il" viewBox="0 0 320 180"><use href="#shot-city"/></svg><div class="shot__meta"><b>İstanbul · gece</b><span class="chip chip--run">ÜRETİLİYOR</span><div class="meter" style="--v:64%"><i></i></div></div></div>
+            <div class="shot pal-mute"><svg class="il" viewBox="20 70 180 101"><use href="#shot" width="320" height="180"/></svg><div class="shot__meta"><b>Oba · şafak</b><span class="chip chip--wait">SIRADA</span><div class="meter"><i></i></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="engine">
+        <span class="tag tag--ember">MOTOR · SİZİN BİNANIZDA</span>
+        <div class="engine__slots">
+          <div class="gpu"><i style="--v:40%"></i><i style="--v:70%"></i><i style="--v:55%"></i><i style="--v:90%"></i><i style="--v:65%"></i></div>
+          <div class="gpu"><i style="--v:80%"></i><i style="--v:50%"></i><i style="--v:95%"></i><i style="--v:60%"></i><i style="--v:75%"></i></div>
+          <div class="gpu"><i style="--v:30%"></i><i style="--v:60%"></i><i style="--v:45%"></i><i style="--v:70%"></i><i style="--v:50%"></i></div>
+          <div class="gpu"><i style="--v:65%"></i><i style="--v:85%"></i><i style="--v:55%"></i><i style="--v:75%"></i><i style="--v:95%"></i></div>
+        </div>
+      </div>
+    </div>
+    <p class="cap"><b>Motor</b> görüntüyü üretir: arşivinizle eğitilmiş açık modeller, kendi donanımınızda. <b>Platform</b> ekibinizin kullandığı arayüzdür.</p>
+
+    <h3>Tek tuş değil, bir zincir</h3>
+    <div class="strip">
+      <ol>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="11" y="6" width="24" height="34"/><path class="st st-d" d="M16 14h14M16 20h14M16 26h9"/></svg><b>Senaryo</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="6" y="9" width="15" height="12"/><rect class="st" x="25" y="9" width="15" height="12"/><rect class="st" x="6" y="25" width="15" height="12"/><rect class="st st-e" x="25" y="25" width="15" height="12"/></svg><b>Storyboard</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="6" y="10" width="34" height="26"/><path class="fl-e" d="M10 32l9-10 6 6 4-4 7 8Z"/></svg><b>Anahtar kare</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><circle class="st" cx="23" cy="23" r="16"/><path class="fl-e" d="M19 15l12 8-12 8Z"/></svg><b>Çekim</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><path class="st" d="M8 23v0M14 17v12M20 11v24M26 15v16M32 9v28M38 19v8"/></svg><b>Ses</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="5" y="15" width="15" height="16"/><rect class="st st-e" x="20" y="15" width="12" height="16"/><rect class="st" x="32" y="15" width="9" height="16"/><path class="st st-e" d="M26 8v30"/></svg><b>Kurgu</b></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="scene" id="s4" data-name="ÜÇ YOL">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">4</span><span class="slug__text">İÇ. TOPLANTI ODASI – GÜN</span><span class="slug__no">4</span></p>
+    <h2>Bu iş üç yoldan yapılır.</h2>
+    <p class="lede">Fark, görüntünün nerede üretildiğidir.</p>
+    <div class="routes">
+      <div class="card routecard">
+        <svg class="il" viewBox="0 0 300 130" aria-hidden="true">
+          <text class="svg-t" x="10" y="20">SİZİN BİNANIZ</text><text class="svg-t" x="292" y="20" text-anchor="end" style="fill:var(--steel)">ONLARIN SUNUCUSU</text>
+          <rect class="st st-d dash" x="8" y="30" width="112" height="90" rx="6"/>
+          <path class="fl-h" d="M26 110V68q28-20 56 0v42Z"/><path class="st" d="M26 110V68q28-20 56 0v42Z"/>
+          <rect class="fl-i" x="44" y="84" width="20" height="26"/><rect class="st st-d" x="44" y="84" width="20" height="26"/>
+          <path class="st st-s dash" d="M92 88h92"/><path class="st st-s" d="M178 82l8 6-8 6"/>
+          <rect class="fl-s" x="130" y="83" width="12" height="10"/><rect class="fl-s" x="152" y="83" width="12" height="10" opacity=".55"/>
+          <path class="fl-h" d="M206 108a17 17 0 0 1 2-34 25 25 0 0 1 48-6 20 20 0 0 1 18 40Z"/><path class="st st-s" d="M206 108a17 17 0 0 1 2-34 25 25 0 0 1 48-6 20 20 0 0 1 18 40Z"/>
+          <rect class="st st-s" x="224" y="78" width="30" height="18"/><path class="st st-s" d="M224 87h30"/><circle class="fl-s" cx="230" cy="82.500" r="1.8"/><circle class="fl-s" cx="230" cy="91.500" r="1.8"/>
+        </svg>
+        <span class="tag">YOL A</span><h3>Kapalı bulut</h3><p>Hazır servisler. Görüntü onların sunucusunda üretilir.</p>
+      </div>
+      <div class="card routecard">
+        <svg class="il" viewBox="0 0 300 130" aria-hidden="true">
+          <text class="svg-t" x="10" y="20">SİZİN BİNANIZ</text><text class="svg-t" x="292" y="20" text-anchor="end" style="fill:var(--steel)">KİRALIK SUNUCU</text>
+          <rect class="st st-d dash" x="8" y="30" width="112" height="90" rx="6"/>
+          <path class="fl-h" d="M26 110V68q28-20 56 0v42Z"/><path class="st" d="M26 110V68q28-20 56 0v42Z"/>
+          <rect class="fl-i" x="44" y="84" width="20" height="26"/><rect class="st st-d" x="44" y="84" width="20" height="26"/>
+          <path class="st st-s dash" d="M92 88h100"/><path class="st st-s" d="M186 82l8 6-8 6"/>
+          <rect class="fl-s" x="130" y="83" width="12" height="10"/><rect class="fl-s" x="152" y="83" width="12" height="10" opacity=".55"/>
+          <rect class="fl-h" x="210" y="40" width="60" height="72"/><rect class="st st-s" x="210" y="40" width="60" height="72"/>
+          <path class="st st-s" d="M210 64h60M210 88h60"/>
+          <circle class="fl-s" cx="220" cy="52" r="2.500"/><circle class="fl-s" cx="220" cy="76" r="2.500"/><circle class="fl-s" cx="220" cy="100" r="2.500"/>
+          <path class="st st-s" d="M232 52h28M232 76h28M232 100h28" opacity=".5"/>
+        </svg>
+        <span class="tag">YOL B</span><h3>Kiralık GPU</h3><p>Sizin modelleriniz, saatlik kiralanan donanımda.</p>
+      </div>
+      <div class="card routecard routecard--local">
+        <svg class="il" viewBox="0 0 300 130" aria-hidden="true">
+          <text class="svg-t" x="54" y="20" style="fill:var(--ember)">SİZİN BİNANIZ</text>
+          <rect class="st st-e dash" x="52" y="30" width="196" height="90" rx="6"/>
+          <path class="fl-h" d="M72 110V68q28-20 56 0v42Z"/><path class="st" d="M72 110V68q28-20 56 0v42Z"/>
+          <rect class="fl-i" x="90" y="84" width="20" height="26"/><rect class="st st-d" x="90" y="84" width="20" height="26"/>
+          <path class="st st-e" d="M136 92h36"/><path class="st st-e" d="M166 86l8 6-8 6"/>
+          <path class="st st-e dash" d="M204 46q-50-22-96 8"/><path class="st st-e" d="M116 46l-9 9 12 2"/>
+          <rect class="fl-h" x="182" y="48" width="48" height="62"/><rect class="st st-e" x="182" y="48" width="48" height="62"/>
+          <path class="st st-e" d="M182 68h48M182 89h48"/>
+          <circle class="fl-e" cx="191" cy="58" r="2.500"/><circle class="fl-e" cx="191" cy="78.500" r="2.500"/><circle class="fl-e" cx="191" cy="99.500" r="2.500"/>
+          <path class="st st-e" d="M200 58h22M200 78.500h22M200 99.500h22" opacity=".5"/>
+        </svg>
+        <span class="tag">YOL C</span><h3>Lokal</h3><p>Sizin modelleriniz, sizin binanızda. Hiçbir şey dışarı çıkmaz.</p>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">ÖLÇÜT</th><th scope="col">A · BULUT</th><th scope="col">B · KİRALIK</th><th scope="col" class="c-local">C · LOKAL</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Görüntü kalitesi</th><td class="g">En iyi</td><td>Orta-iyi</td><td>Orta-iyi</td></tr>
+          <tr><th scope="row">Diyalog, dudak senkronu</th><td class="g">Hazır</td><td class="b">Zayıf</td><td class="b">Zayıf</td></tr>
+          <tr><th scope="row">İlk filme kadar süre</th><td class="g">1-2 hafta</td><td>3-4 hafta</td><td class="b">Donanım gelince</td></tr>
+          <tr><th scope="row">Başlangıç yatırımı</th><td class="g">Yok</td><td class="g">Yok</td><td class="b">Yüksek</td></tr>
+          <tr><th scope="row">Kullandıkça maliyet</th><td>Artar</td><td>Artar</td><td class="g">Elektrik, bakım</td></tr>
+          <tr><th scope="row">Arşivinizle eğitim</th><td class="b">Sınırlı</td><td class="g">Tam</td><td class="g">Tam</td></tr>
+          <tr><th scope="row">Gerçek oyuncu yüzü</th><td class="b">Engellenir</td><td class="g">Serbest</td><td class="g">Serbest</td></tr>
+          <tr><th scope="row">Savaş sahneleri</th><td class="b">Sık reddedilir</td><td class="g">Serbest</td><td class="g">Serbest</td></tr>
+          <tr><th scope="row">Gizlilik</th><td class="b">Dışarı çıkar</td><td>Kısmen</td><td class="g">Tam</td></tr>
+          <tr><th scope="row">Dışa bağımlılık</th><td class="b">Yüksek</td><td>Düşük</td><td class="g">Yok</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend"><span class="g">Güçlü</span><span>Orta</span><span class="b">Zayıf</span></div>
+    <p class="cap"><b>Açık konuşalım:</b> lokal ucuz olduğu için seçilmez. Kısa vadede bulut daha ucuzdur. Lokalin gerekçesi kontroldür.</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="scene" id="s5" data-name="NEDEN LOKAL">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">5</span><span class="slug__text">İÇ. ARŞİV ODASI – GÜN</span><span class="slug__no">5</span></p>
+    <h2>Lokali haklı çıkaran üç şey.</h2>
+    <div class="grid grid--3">
+      <div class="card reason">
+        <svg class="il" viewBox="0 0 200 120" aria-hidden="true">
+          <rect class="fl-h" width="200" height="120"/>
+          <path class="fl-i" d="M52 120q4-40 44-40t44 40Z"/><path class="st" d="M52 120q4-40 44-40t44 40"/>
+          <path class="fl-i" d="M78 50v20q3 10 18 15 15-5 18-15V50Z"/><path class="st st-d" d="M78 50v20q3 10 18 15 15-5 18-15V50"/>
+          <ellipse class="fl-h" cx="96" cy="56" rx="14" ry="17"/><ellipse class="st" cx="96" cy="56" rx="14" ry="17"/>
+          <path class="fl-e" d="M76 51q0-27 20-27t20 27Z"/><path class="st st-e" d="M96 24V13"/>
+          <path class="st w3" style="stroke:var(--ember)" d="M96 51v12"/>
+          <path class="st st-e" d="M64 28V16h12M116 16h12v12M128 80v12h-12M76 92H64V80"/>
+          <circle class="fl-e" cx="156" cy="40" r="15"/><path class="st w3" style="stroke:var(--ink)" d="M149 40l5 6 9-11"/>
+        </svg>
+        <h3>Oyuncu yüzleri</h3><p>Bulut servisleri gerçek kişileri engeller. Burada karar sizin.</p>
+      </div>
+      <div class="card reason">
+        <svg class="il" viewBox="0 0 200 120" aria-hidden="true">
+          <rect class="fl-h" width="200" height="120"/>
+          <!-- kılıçlar -->
+          <path class="st w5" d="M40 100L150 14"/><path class="st w5" d="M160 100L50 14"/>
+          <path class="st w5" style="stroke:var(--ember)" d="M46 80l18 22M154 80l-18 22"/>
+          <path class="st w5 st-d" d="M40 100l-10 8M160 100l10 8"/>
+          <!-- kalkan -->
+          <circle class="fl-i" cx="100" cy="62" r="34"/><circle class="st" cx="100" cy="62" r="34"/>
+          <circle class="st st-d" cx="100" cy="62" r="26"/>
+          <path class="st st-d" d="M100 36v52M74 62h52"/>
+          <circle class="fl-e" cx="100" cy="62" r="9"/>
+          <g class="fl-d"><circle cx="100" cy="32" r="2"/><circle cx="100" cy="92" r="2"/><circle cx="70" cy="62" r="2"/><circle cx="130" cy="62" r="2"/></g>
+        </svg>
+        <h3>Savaş sahneleri</h3><p>Tarihi aksiyon bulut filtrelerine takılır. Lokalde filtre yok.</p>
+      </div>
+      <div class="card reason">
+        <svg class="il pal-ember" viewBox="0 0 200 120" aria-hidden="true">
+          <rect class="fl-h" width="200" height="120"/>
+          <!-- arşiv kareleri -->
+          <rect class="fl-i" x="14" y="16" width="44" height="26"/><rect class="st st-d" x="14" y="16" width="44" height="26"/>
+          <rect class="fl-i" x="14" y="47" width="44" height="26"/><rect class="st st-d" x="14" y="47" width="44" height="26"/>
+          <rect class="fl-i" x="14" y="78" width="44" height="26"/><rect class="st st-d" x="14" y="78" width="44" height="26"/>
+          <path class="fl-d" d="M20 38l9-10 6 6 4-4 9 8Z"/><circle class="fl-d" cx="36" cy="60" r="7"/><path class="fl-d" d="M24 100v-6q12-12 24 0v6Z"/>
+          <!-- model ağı -->
+          <path class="st st-l" d="M58 29l26 13M58 60l26-18M58 60l26 18M58 91l26-13M84 42l26 18M84 78l26-18M84 42l26-12M84 78l26 12M110 30l22 30M110 90l22-30M110 60h22"/>
+          <g class="fl-e"><circle cx="84" cy="42" r="5"/><circle cx="84" cy="78" r="5"/><circle cx="110" cy="30" r="5"/><circle cx="110" cy="60" r="5"/><circle cx="110" cy="90" r="5"/></g>
+          <!-- üretilen kare -->
+          <svg x="136" y="42" width="54" height="36" viewBox="40 60 160 107"><use href="#shot" width="320" height="180"/></svg>
+          <rect class="st st-e" x="136" y="42" width="54" height="36"/>
+        </svg>
+        <h3>Arşivle eğitim</h3><p>Kostümünüz ve dekorunuz modele öğretilir, kalıcı varlığınız olur.</p>
+      </div>
+    </div>
+    <div class="verdict">
+      <div><span class="tag tag--steel">BULUTUN ÖNDE OLDUĞU YER</span><p>Konuşan karakterler ve en üst görüntü kalitesi.</p></div>
+      <div><span class="tag tag--ember">SONUÇ</span><p>Platform ikisini de çalıştırır. Her çekimde motoru siz seçersiniz.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="scene" id="s6" data-name="YOL HARİTASI">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">6</span><span class="slug__text">MONTAJ – BEŞ PERDE</span><span class="slug__no">6</span></p>
+    <h2>Küçük başlar, sonuç gördükçe büyür.</h2>
+    <p class="lede">Sütun yüksekliği yatırımın göreli büyüklüğüdür. Büyük harcama, sonuç görüldükten sonra gelir.</p>
+    <div>
+      <div class="steps" role="img" aria-label="Perdelerin göreli yatırım büyüklüğü: Perde 0 en küçük, Perde 1 küçük, Perde 2 orta, Perde 3 en büyük, Perde 4 değişken">
+        <div class="step" style="--h: 5px; --c: #8a6a45"><i></i></div>
+        <div class="step" style="--h: 30px; --c: #b0763a"><i></i></div>
+        <div class="step" style="--h: 96px; --c: #cb853f"><i></i></div>
+        <div class="step" style="--h: 168px"><i></i></div>
+        <div class="step step--open" style="--h: 110px"><i></i></div>
+      </div>
+      <ol class="steplabels">
+        <li><b>0</b><span>Keşif</span><small>1 hafta</small></li>
+        <li><b>1</b><span>İlk Film</span><small>3-4 hafta</small></li>
+        <li><b>2</b><span>Stüdyo Çekirdeği</span><small>6-8 hafta</small></li>
+        <li><b>3</b><span>Prodüksiyon Hattı</span><small>2-3 ay</small></li>
+        <li><b>4</b><span>Ölçek</span><small>sürekli</small></li>
+      </ol>
+    </div>
+    <p class="cap"><b>◆ Karar kapısı.</b> Her perdenin sonunda sonuca bakar, devam edip etmemeye siz karar verirsiniz. Ölçek görelidir, rakam değildir.</p>
+    <div class="acts">
+      <div class="act"><span class="act__no">0</span><h3>Keşif</h3><p>Hedef ve pilot filmin konusu netleşir.</p></div>
+      <div class="act"><span class="act__no">1</span><h3>İlk Film</h3><p>Donanım almadan 60-90 saniyelik film.</p></div>
+      <div class="act"><span class="act__no">2</span><h3>Stüdyo Çekirdeği</h3><p>İlk donanım, platformun ilk sürümü. Filmi sizin ekibiniz üretir.</p></div>
+      <div class="act"><span class="act__no">3</span><h3>Prodüksiyon Hattı</h3><p>Çok kullanıcı, Türkçe ses, yönetmen onayı, sunucu.</p></div>
+      <div class="act"><span class="act__no">4</span><h3>Ölçek</h3><p>Senaryodan otomatik storyboard. Diğer yapımlara hizmet, yeni gelir.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="scene" id="s7" data-name="İLK FİLM">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">7</span><span class="slug__text">YAKIN PLAN – PERDE 1 – İLK FİLM</span><span class="slug__no">7</span></p>
+    <h2>Dört hafta sonra izleyeceğiniz şey.</h2>
+    <p class="lede">Kendi dünyanızda geçen, 60-90 saniyelik bir kısa film.</p>
+    <figure class="player pal-ember" aria-label="Pilot sonunda izlenecek kısa filmi temsil eden oynatıcı">
+      <div class="player__screen">
+        <svg class="il" viewBox="0 18 320 136" aria-hidden="true"><use href="#shot" width="320" height="180"/></svg>
+        <span class="player__play"></span>
+      </div>
+      <div class="player__bar"><b>İLK FİLM</b><div class="meter"><i></i></div><span>00:00 / 01:30</span></div>
+    </figure>
+    <p class="cap">Görsel temsilidir. Film, arşivinizden seçilen bir karakter ve bir mekânla üretilir.</p>
+    <ol class="weeks">
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect class="st st-d" x="5" y="8" width="14" height="11"/><rect class="st st-d" x="5" y="24" width="14" height="11"/><path class="st st-e" d="M23 22h8M28 18l4 4-4 4"/><circle class="st" cx="37" cy="22" r="4"/></svg><i>HAFTA 1</i><b>Modele öğret</b></li>
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect class="st" x="5" y="8" width="15" height="12"/><rect class="st" x="24" y="8" width="15" height="12"/><rect class="st" x="5" y="24" width="15" height="12"/><rect class="st st-e" x="24" y="24" width="15" height="12"/></svg><i>HAFTA 2</i><b>Storyboard</b></li>
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><circle class="st" cx="22" cy="22" r="15"/><path class="fl-e" d="M18 14l12 8-12 8Z"/></svg><i>HAFTA 3</i><b>Çekimler</b></li>
+      <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect class="st" x="5" y="9" width="34" height="22"/><path class="st st-d" d="M16 37h12M22 31v6"/><path class="fl-e" d="M9 27l8-9 6 6 4-4 8 7Z"/></svg><i>HAFTA 4</i><b>Gösterim</b></li>
+    </ol>
+    <div class="grid grid--3">
+      <div class="card"><span class="tag tag--ember">SİZDEN</span><ul class="ticks"><li>Bir karakter ve bir mekânın arşivi</li><li>Bir muhatap</li><li>Kullanım hakkı onayı</li></ul></div>
+      <div class="card"><span class="tag tag--ember">SİZE</span><ul class="ticks"><li>60-90 saniyelik film</li><li>Aynı sahnenin bulut servisiyle üretilmiş hâli, kıyas için</li><li>Donanım ölçüm raporu</li></ul></div>
+      <div class="card"><span class="tag">BU PERDEDE YOK</span><ul class="ticks"><li>Donanım alımı</li><li>Yazılım geliştirme</li><li>Diyaloglu sahne</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="scene" id="s8" data-name="RİSKLER">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">8</span><span class="slug__text">İÇ. HUKUK VE PLANLAMA – GÜN</span><span class="slug__no">8</span></p>
+    <h2>Riskler ve karşılığı.</h2>
+    <div class="risks">
+      <div class="risk"><h3>Oyuncu yüzü ve ses hakları</h3><p>Sözleşmeler keşifte incelenir. Pilot, izni net olanla yapılır.</p></div>
+      <div class="risk"><h3>Model lisansları</h3><p>Yalnızca ticari kullanıma açık modeller seçilir.</p></div>
+      <div class="risk"><h3>Kalite beklentisi</h3><p>Dizi kalitesinde final görüntü vaat etmiyoruz. Pilot gerçek seviyeyi gösterir.</p></div>
+      <div class="risk"><h3>Türkçe seslendirme</h3><p>İlk film diyalogsuzdur. Ses, eklenmeden önce ayrıca test edilir.</p></div>
+      <div class="risk"><h3>Teknolojinin hızı</h3><p>Platform tek modele bağlı değildir. Yenisi çıkınca takılır.</p></div>
+      <div class="risk"><h3>Kapsamın büyümesi</h3><p>Her perdenin tek çıktısı vardır. Yeni istekler sonraki perdeye yazılır.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="scene" id="s9" data-name="SONRAKİ ADIM">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">9</span><span class="slug__text">İÇ. BEYKOZ – AYNI ODA – DEVAM</span><span class="slug__no">9</span></p>
+    <h2>Sizden tek bir karar istiyoruz.</h2>
+    <div class="ask">
+      <span class="tag tag--ember">İSTENEN KARAR</span>
+      <h3>Keşif ve İlk Film'e başlayalım mı?</h3>
+      <p>Donanım yok, yazılım yok. Beş hafta sonra elinizde izleyeceğiniz bir film olur; devamına o zaman karar verirsiniz.</p>
+    </div>
+    <p class="fade">KARARMA.</p>
+    <img class="logo" src="../assets/masterlabs-logo.png" alt="MasterLabs Technologies" width="1019" height="342">
+    <p class="credits">MasterLabs tarafından Bozdağ Film için hazırlanmıştır. Kasım 2026.<br>Detayları konuşmak için: <a href="mailto:uzman@masterlabs.com.tr">uzman@masterlabs.com.tr</a> · <a href="tel:+905063396267" style="white-space:nowrap">0506 339 62 67</a></p>
+    <p class="credits">Süreler ve ölçekler ön değerlendirmedir, keşif sonrasında kesinleşir.<br><a href="../hikaye/">Kısa hikâye sürümünü açın</a></p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function () {
+  var tc = document.getElementById('tc'), where = document.getElementById('where'),
+      progress = document.getElementById('progress'),
+      scenes = Array.prototype.slice.call(document.querySelectorAll('.scene')),
+      RUNTIME = 3 * 60, FPS = 24, ticking = false;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function update() {
+    ticking = false;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    var frames = Math.round(p * RUNTIME * FPS);
+    var s = Math.floor(frames / FPS);
+    tc.textContent = '00:' + pad(Math.floor(s / 60)) + ':' + pad(s % 60) + ':' + pad(frames % FPS);
+    progress.style.width = (p * 100) + '%';
+    var line = window.innerHeight * 0.4, current = 0;
+    scenes.forEach(function (sc, i) { if (sc.getBoundingClientRect().top <= line) current = i; });
+    where.innerHTML = '<b>SAHNE ' + pad(current + 1) + '/' + pad(scenes.length) + '</b> · ' + scenes[current].dataset.name;
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Otağ · MasterLabs proje önerisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Courier+Prime:wght@400;700&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+/* Giriş sayfası: iki sürümden birini seçtirir. Renk ve yazı dili sunumlarla aynıdır. */
+:root {
+  color-scheme: dark;
+  --ink: #15120f; --hide: #1e1a16; --line: #3a3229;
+  --parchment: #ebe2d0; --dust: #a89c88; --ember: #e0913f;
+  --display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --script: "Courier Prime", "Courier New", Courier, monospace;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0; min-height: 100vh; min-height: 100dvh; background: var(--ink); color: var(--parchment);
+  font: 400 17px/1.5 var(--body); -webkit-font-smoothing: antialiased;
+  display: grid; place-items: center;
+  padding: max(28px, env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) max(28px, env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px));
+}
+main { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 26px; }
+h1, p { margin: 0; }
+.slug { font: 700 14px/1.4 var(--script); letter-spacing: .06em; color: var(--ember); }
+h1 { font: 800 clamp(84px, 24vw, 168px)/.82 var(--display); letter-spacing: -.01em; }
+h1 span { color: var(--ember); }
+.sub { font: 600 clamp(22px, 4.4vw, 32px)/1.12 var(--display); max-width: 22ch; text-wrap: balance; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 560px) { .choices { grid-template-columns: 1fr; } }
+.choice {
+  display: flex; flex-direction: column; gap: 8px; padding: 20px; text-decoration: none;
+  color: var(--parchment); background: var(--hide); border: 1px solid var(--line);
+}
+.choice:hover, .choice:focus-visible { border-color: var(--ember); outline: none; }
+.choice i { font: 700 12px/1 var(--script); letter-spacing: .1em; color: var(--ember); font-style: normal; }
+.choice b { font: 600 30px/1 var(--display); letter-spacing: .02em; }
+.choice span { color: var(--dust); font-size: 16px; }
+.choice em { font: 700 13px/1 var(--script); letter-spacing: .06em; color: var(--ember); font-style: normal; margin-top: 6px; }
+.logo { display: block; width: 200px; max-width: 60%; height: auto; }
+.credits { font: 400 13px/1.6 var(--script); color: var(--dust); }
+.credits a { color: var(--ember); }
+</style>
+</head>
+<body>
+<main>
+  <p class="slug">MASTERLABS · BOZDAĞ FİLM İÇİN PROJE ÖNERİSİ</p>
+  <h1>OTA<span>Ğ</span></h1>
+  <p class="sub">Bozdağ Film'in kendi dünyasını, kendi çatısı altında üreten yapay zekâ stüdyosu.</p>
+  <div class="choices">
+    <a class="choice" href="hikaye/">
+      <i>2 DAKİKA</i><b>Hikâye</b>
+      <span>13 ekranda özet. Kaydırarak ya da dokunarak ilerler.</span>
+      <em>AÇ →</em>
+    </a>
+    <a class="choice" href="detay/">
+      <i>3 DAKİKA</i><b>Detay</b>
+      <span>Karşılaştırma tablosu ve yol haritasıyla tam sürüm.</span>
+      <em>AÇ →</em>
+    </a>
+  </div>
+  <img class="logo" src="assets/masterlabs-logo.png" alt="MasterLabs Technologies" width="1019" height="342">
+  <p class="credits">MasterLabs tarafından Bozdağ Film için hazırlanmıştır. Kasım 2026.<br>Detayları konuşmak için: <a href="mailto:uzman@masterlabs.com.tr">uzman@masterlabs.com.tr</a> · <a href="tel:+905063396267" style="white-space:nowrap">0506 339 62 67</a></p>
+</main>
+</body>
+</html>
