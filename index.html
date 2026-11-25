@@ -32,8 +32,14 @@ h1, p { margin: 0; }
 h1 { font: 800 clamp(84px, 24vw, 168px)/.82 var(--display); letter-spacing: -.01em; }
 h1 span { color: var(--ember); }
 .sub { font: 600 clamp(22px, 4.4vw, 32px)/1.12 var(--display); max-width: 22ch; text-wrap: balance; }
-.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.choices { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
 @media (max-width: 560px) { .choices { grid-template-columns: 1fr; } }
+.choice.choice--first { background: var(--ember); border-color: var(--ember); color: var(--ink); padding: 24px; }
+.choice.choice--first:hover, .choice.choice--first:focus-visible { border-color: var(--parchment); }
+.choice.choice--first strong { align-self: flex-start; font: 700 12px/1 var(--script); letter-spacing: .1em; padding: 6px 8px; background: var(--ink); color: var(--ember); margin-bottom: 6px; }
+.choice.choice--first i, .choice.choice--first em, .choice.choice--first span { color: var(--ink); }
+.choice.choice--first b { font-size: 44px; }
+.choice.choice--first em { font-size: 15px; margin-top: 10px; }
 .choice {
   display: flex; flex-direction: column; gap: 8px; padding: 20px; text-decoration: none;
   color: var(--parchment); background: var(--hide); border: 1px solid var(--line);
@@ -59,14 +65,15 @@ h1 span { color: var(--ember); }
   <h1>OTA<span>Ğ</span></h1>
   <p class="sub">Bozdağ Film'in kendi dünyasını, kendi çatısı altında üreten yapay zekâ stüdyosu.</p>
   <div class="choices">
-    <a class="choice" href="hikaye/">
+    <a class="choice choice--first" href="hikaye/">
+      <strong>BURADAN BAŞLAYIN</strong>
       <i>2 DAKİKA</i><b>Hikâye</b>
-      <span>13 ekranda özet. Kaydırarak ya da dokunarak ilerler.</span>
-      <em>AÇ →</em>
+      <span>Önerinin tamamı 13 ekranda. Kaydırarak ya da dokunarak ilerler.</span>
+      <em>BAŞLA →</em>
     </a>
     <a class="choice" href="detay/">
-      <i>3 DAKİKA</i><b>Detay</b>
-      <span>Karşılaştırma tablosu ve yol haritasıyla tam sürüm.</span>
+      <i>SONRA · 5 DAKİKA</i><b>Detay</b>
+      <span>Platformun özellikleri, karşılaştırma tablosu ve yol haritası.</span>
       <em>AÇ →</em>
     </a>
   </div>

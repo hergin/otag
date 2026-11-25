@@ -45,6 +45,9 @@ a { color: var(--ember); }
 
 /* Çizimler */
 .il { display: block; width: 100%; height: auto; }
+.ph { object-fit: cover; border: 1px solid var(--line); }
+.pal-steel .ph { filter: saturate(.55) brightness(.85); }
+.pal-mute .ph { filter: grayscale(1) brightness(.5); }
 .st { fill: none; stroke: var(--parchment); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
 .st-d { stroke: var(--dust); } .st-e { stroke: var(--ember); } .st-s { stroke: var(--steel); } .st-l { stroke: var(--line); }
 .dash { stroke-dasharray: 4 5; }
@@ -153,11 +156,11 @@ h3 { font: 600 24px/1.1 var(--display); letter-spacing: .02em; }
   background: repeating-linear-gradient(90deg, var(--ink) 0 10px, transparent 10px 22px);
 }
 .strip::before { top: 5px; } .strip::after { bottom: 5px; }
-.strip ol { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; padding-inline: 8px; }
+.strip ol { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; padding-inline: 8px; }
 .strip li { background: var(--hide-2); padding: 14px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; text-align: center; }
 .strip li svg { width: 46px; height: 46px; }
 .strip li b { font: 600 17px/1.1 var(--display); letter-spacing: .03em; }
-@media (max-width: 620px) { .strip ol { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 820px) { .strip ol { grid-template-columns: repeat(4, 1fr); } }
 
 /* 4. Üç yol */
 .routes { display: grid; gap: 16px; }
@@ -189,7 +192,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 
 /* 5. Neden lokal */
 .reason { border-top: 3px solid var(--ember); }
-.reason .il { max-width: 260px; }
+.reason .il { max-width: 260px; } .reason .ph { max-width: none; }
 .verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .verdict > div { padding: 18px 20px; border: 1px solid var(--line); background: var(--hide-2); min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .verdict p { font-size: 16px; color: var(--dust); }
@@ -213,14 +216,13 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 @media (max-width: 620px) { .act { grid-template-columns: 34px minmax(0, 1fr); } .act p { grid-column: 2; } }
 
 /* 7. İlk film */
-.player { max-width: 860px; border: 1px solid var(--dust); background: var(--ink); }
+.player { max-width: 860px; border: 1px dashed var(--dust); background: var(--ink); }
 .player__screen { position: relative; }
-.player__play { position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: rgba(21, 18, 15, .72); border: 2px solid var(--parchment); }
-.player__play::after { content: ""; position: absolute; left: 25px; top: 18px; border-left: 18px solid var(--parchment); border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
-.player__bar { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--line); font: 400 12px/1 var(--script); letter-spacing: .06em; color: var(--dust); }
-.player__bar b { color: var(--ember); font-weight: 700; flex: none; }
-.player__bar .meter { flex: 1; min-width: 0; }
-.player__bar span { flex: none; font-variant-numeric: tabular-nums; }
+.player__screen .il { opacity: .38; }
+.player__stamp { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-3deg); width: max-content; max-width: 86%; padding: 12px 18px; text-align: center; background: rgba(21, 18, 15, .82); border: 2px solid var(--ember); color: var(--parchment); font: 400 14px/1.4 var(--script); }
+.player__stamp b { display: block; font: 800 clamp(24px, 5vw, 40px)/1 var(--display); letter-spacing: .04em; color: var(--ember); margin-bottom: 6px; }
+.player__bar { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 12px; border-top: 1px dashed var(--line); font: 400 12px/1.4 var(--script); letter-spacing: .06em; color: var(--dust); }
+.player__bar b { color: var(--ember); font-weight: 700; }
 .weeks { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: var(--hide); }
 .weeks li { padding: 16px; border-right: 1px solid var(--line); min-width: 0; display: flex; flex-direction: column; gap: 8px; }
 .weeks li:last-child { border-right: 0; }
@@ -232,7 +234,8 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 .ticks li::before { content: "→"; position: absolute; left: 0; color: var(--ember); font-family: var(--script); }
 
 /* 8. Riskler */
-.risks { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; border: 1px solid var(--line); }
+.risks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); }
+@media (max-width: 620px) { .risks { grid-template-columns: 1fr; } }
 .risk { padding: 18px 20px; background: var(--hide); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .risk p { font-size: 16px; color: var(--dust); line-height: 1.45; }
 .risk p::before { content: "→ "; color: var(--good); font-family: var(--script); }
@@ -248,6 +251,16 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 .brandrow { display: flex; align-items: center; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; }
 .badge { font: 700 13px/1.3 var(--script); letter-spacing: .1em; padding: 9px 12px; background: var(--ember); color: var(--ink); }
 /* Sayfa türü etiketi: dolgulu = MasterLabs'in yapacağı iş, çerçeveli = bağlam ve karar */
+.feats { display: flex; flex-direction: column; gap: 22px; }
+.feats__group { border: 1px solid var(--line); background: var(--hide); }
+.feats__group h3 { padding: 14px 18px; border-bottom: 1px solid var(--line); color: var(--ember); }
+.feat { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr) auto; gap: 4px 18px; align-items: baseline; padding: 12px 18px; border-bottom: 1px solid var(--line); }
+.feat:last-child { border-bottom: 0; }
+.feat b { font: 600 19px/1.15 var(--display); letter-spacing: .02em; }
+.feat p { font-size: 16px; line-height: 1.45; color: var(--dust); }
+.feat .chip { align-self: center; white-space: nowrap; }
+.chip--p2 { color: var(--ember); } .chip--p3 { color: var(--steel); } .chip--p4 { color: var(--dust); }
+@media (max-width: 760px) { .feat { grid-template-columns: minmax(0, 1fr) auto; } .feat p { grid-column: 1 / -1; grid-row: 2; } }
 .kind { align-self: flex-start; font: 700 12px/1.3 var(--script); letter-spacing: .1em; padding: 7px 10px; border: 1px solid var(--dust); color: var(--dust); margin-bottom: -8px; }
 .kind--ours { background: var(--ember); border-color: var(--ember); color: var(--ink); }
 </style>
@@ -291,7 +304,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 </svg>
 
 <div class="bar" aria-hidden="true">
-  <span class="bar__where" id="where"><b>SAHNE 01/09</b> · AÇILIŞ</span>
+  <span class="bar__where" id="where"><b>SAHNE 01/10</b> · AÇILIŞ</span>
   <span class="bar__tc" id="tc">00:00:00:00</span>
   <span class="bar__progress" id="progress"></span>
 </div>
@@ -311,27 +324,13 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
         <h1>OTA<span>Ğ</span></h1>
         <p class="hero__sub">Bozdağ Film'in kendi dünyasını, kendi çatısı altında üreten yapay zekâ stüdyosu.</p>
       </div>
-      <svg class="il hero__art" viewBox="0 0 400 320" role="img" aria-label="Vizörden görünen bir otağ çadırı">
-        <!-- vizör köşeleri -->
-        <path class="st st-d" d="M20 50V20h30M350 20h30v30M380 270v30h-30M50 300H20v-30"/>
-        <circle class="fl-e" cx="44" cy="44" r="5"/><text class="svg-t" x="56" y="48">REC</text>
-        <text class="svg-t" x="312" y="48">24 FPS</text>
-        <!-- ufuk ve tepeler -->
-        <path class="st st-l" d="M20 236h360"/>
-        <path class="st st-d" d="M20 236l60-46 44 30 50-58 40 44"/>
-        <path class="st st-d" d="M270 208l44-34 66 62"/>
-        <circle class="st st-d" cx="318" cy="96" r="20"/>
-        <!-- otağ -->
-        <path class="fl-h" d="M112 176Q200 78 288 176V256H112Z"/>
-        <path class="st" d="M112 176Q200 78 288 176"/>
-        <path class="st" d="M112 176V256H288V176Z"/>
-        <path class="st st-d" d="M112 196h66M222 196h66"/>
-        <path class="st st-l" d="M124 196l16 60M146 196l16 60M140 196l-16 60M162 196l-16 60M238 196l16 60M260 196l16 60M254 196l-16 60M276 196l-16 60"/>
-        <path class="fl-e" d="M178 256V204q22-22 44 0v52Z"/>
-        <path class="st" d="M192 118h16"/>
-        <path class="st" d="M200 118V78"/>
-        <path class="fl-e" d="M200 78l30 9-30 9Z"/>
-        <path class="st st-d" d="M60 256h280"/>
+      <svg class="il hero__art" viewBox="0 0 400 225" role="img" aria-label="Vizörden görünen otağ: Bozdağ Film Platoları">
+        <defs><linearGradient id="kapak-golge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15120f" stop-opacity=".75"/><stop offset=".3" stop-color="#15120f" stop-opacity="0"/><stop offset=".75" stop-color="#15120f" stop-opacity="0"/><stop offset="1" stop-color="#15120f" stop-opacity=".15"/></linearGradient></defs>
+        <image href="../assets/kareler/kapak.jpg" width="400" height="225" preserveAspectRatio="xMidYMid slice"/>
+        <rect width="400" height="225" fill="url(#kapak-golge)"/>
+        <path d="M20 50V20h30M350 20h30v30M380 175v30h-30M50 205H20v-30" fill="none" stroke="#ebe2d0" stroke-width="2"/>
+        <circle class="fl-e" cx="44" cy="44" r="5"/><text class="svg-t" x="56" y="48" style="fill:#ebe2d0">REC</text>
+        <text class="svg-t" x="312" y="48" style="fill:#ebe2d0">24 FPS</text>
       </svg>
     </div>
     <dl class="slate">
@@ -339,7 +338,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
       <div class="slate__cells">
         <div class="slate__cell"><dt>HAZIRLAYAN</dt><dd>MasterLabs</dd></div>
         <div class="slate__cell"><dt>KİME</dt><dd>Bozdağ Film</dd></div>
-        <div class="slate__cell"><dt>OKUMA</dt><dd>3 dk</dd></div>
+        <div class="slate__cell"><dt>OKUMA</dt><dd>5 dk</dd></div>
         <div class="slate__cell"><dt>İSTENEN KARAR</dt><dd>1</dd></div>
       </div>
     </dl>
@@ -354,72 +353,19 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
     <h2>Araçlar herkeste var. Bu dünya yalnızca sizde.</h2>
     <div class="grid grid--3">
       <div class="card">
-        <svg class="il" viewBox="0 0 240 150" aria-hidden="true">
-          <rect class="fl-h" width="240" height="150"/>
-          <path class="st st-d" d="M10 24V10h14M216 10h14v14M230 126v14h-14M24 140H10v-14"/>
-          <!-- şerit -->
-          <rect class="fl-i" x="72" y="92" width="150" height="34"/><rect class="st" x="72" y="92" width="150" height="34"/>
-          <path class="st st-d" stroke-dasharray="3 5" d="M76 96h144M76 122h144"/>
-          <rect class="fl-h" x="112" y="100" width="30" height="18"/><rect class="fl-h" x="148" y="100" width="30" height="18"/><rect class="fl-h" x="184" y="100" width="30" height="18"/>
-          <path class="fl-e" d="M115 116l8-9 5 5 4-4 7 8Z"/>
-          <circle class="fl-e" cx="163" cy="109" r="5"/>
-          <path class="fl-e" d="M190 116v-5q9-9 18 0v5Z"/>
-          <!-- makara -->
-          <circle class="fl-i" cx="74" cy="70" r="40"/><circle class="st" cx="74" cy="70" r="40"/>
-          <circle class="st st-d" cx="74" cy="70" r="33"/>
-          <g class="fl-h"><circle cx="74" cy="48" r="9"/><circle cx="95" cy="63" r="9"/><circle cx="87" cy="88" r="9"/><circle cx="61" cy="88" r="9"/><circle cx="53" cy="63" r="9"/></g>
-          <g class="st st-d"><circle cx="74" cy="48" r="9"/><circle cx="95" cy="63" r="9"/><circle cx="87" cy="88" r="9"/><circle cx="61" cy="88" r="9"/><circle cx="53" cy="63" r="9"/></g>
-          <circle class="fl-e" cx="74" cy="70" r="5"/>
-          <!-- arşiv kutuları -->
-          <rect class="st st-l" x="150" y="30" width="60" height="16"/><rect class="st st-l" x="158" y="50" width="52" height="16"/><rect class="st st-l" x="144" y="70" width="66" height="16"/>
-          <path class="st st-d" d="M156 38h18M164 58h14M150 78h22"/>
-        </svg>
+        <img class="il ph" src="../assets/kareler/arsiv.jpg" alt="Kuruluş Osman: sancaklar önünde atlı birlik" width="800" height="500" loading="lazy">
         <h3>Arşiv</h3><p>Kuruluş: Osman'dan Destan'a, yılların kostümü, dekoru, ışığı.</p>
       </div>
       <div class="card">
-        <svg class="il" viewBox="0 0 240 150" aria-hidden="true">
-          <rect class="fl-h" width="240" height="150"/>
-          <path class="st st-d" d="M10 24V10h14M216 10h14v14M230 126v14h-14M24 140H10v-14"/>
-          <!-- arkadaki siluetler -->
-          <g style="fill:var(--line)"><circle cx="52" cy="92" r="13"/><path d="M22 150q2-32 30-32t30 32Z"/><circle cx="188" cy="92" r="13"/><path d="M158 150q2-32 30-32t30 32Z"/></g>
-          <!-- öndeki karakter -->
-          <path class="fl-i" d="M70 150q4-44 50-44t50 44Z"/><path class="st" d="M70 150q4-44 50-44t50 44"/>
-          <path class="fl-i" d="M99 66v24q4 12 21 18 17-6 21-18V66Z"/><path class="st st-d" d="M99 66v24q4 12 21 18 17-6 21-18V66"/>
-          <ellipse class="fl-h" cx="120" cy="74" rx="16" ry="20"/><ellipse class="st" cx="120" cy="74" rx="16" ry="20"/>
-          <path class="fl-e" d="M97 68q0-32 23-32t23 32Z"/>
-          <path class="st st-e" d="M120 36V22"/><path class="fl-e" d="M120 22l12 4-12 4Z"/>
-          <path class="st w3" style="stroke:var(--ember)" d="M120 68v14"/>
-          <!-- yüz takip kutusu -->
-          <path class="st st-e" d="M84 40V28h12M144 28h12v12M156 98v12h-12M96 110H84V98"/>
-          <path class="st st-e dash" d="M156 69h22"/><circle class="fl-e" cx="182" cy="69" r="3"/>
-        </svg>
+        <img class="il ph" src="../assets/kareler/karakter.jpg" alt="Kuruluş Osman: Osman Bey" width="800" height="500" loading="lazy">
         <h3>Karakterler</h3><p>Seyircinin tanıdığı yüzler.</p>
       </div>
       <div class="card">
-        <svg class="il" viewBox="0 0 240 150" aria-hidden="true">
-          <rect class="fl-h" width="240" height="150"/>
-          <path class="st st-d" d="M10 24V10h14M216 10h14v14M230 126v14h-14M24 140H10v-14"/>
-          <circle class="st st-d" cx="186" cy="38" r="12"/>
-          <!-- ışık hüzmesi -->
-          <path d="M206 74L138 92v30h62Z" style="fill:var(--ember);opacity:.14"/>
-          <!-- kale dekoru -->
-          <path class="fl-i" d="M26 122V62h8v-8h8v8h8v-8h8v8h8v60Z"/><path class="st" d="M26 122V62h8v-8h8v8h8v-8h8v8h8v60"/>
-          <path class="fl-i" d="M66 122V84h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v38Z"/><path class="st" d="M66 84h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v38"/>
-          <path class="fl-e" d="M84 122v-16q9-9 18 0v16Z"/>
-          <path class="st st-d" d="M40 78v10M52 78v10"/>
-          <!-- otağ -->
-          <path class="fl-i" d="M138 122v-22q26-26 52 0v22Z"/><path class="st" d="M138 122v-22q26-26 52 0v22"/>
-          <path class="st st-d" d="M138 100h52"/>
-          <path class="fl-h" d="M158 122v-12q6-6 12 0v12Z"/><path class="st st-d" d="M158 122v-12q6-6 12 0v12"/>
-          <!-- set ışığı -->
-          <path class="st" d="M214 122V84M206 122l8-12 8 12"/>
-          <path class="fl-e" d="M202 68l18-6 5 16-18 6Z"/>
-          <path class="st st-d" d="M16 122h208"/>
-        </svg>
+        <img class="il ph" src="../assets/kareler/plato.jpg" alt="Bozdağ Film Platoları: otağ ve sancaklar" width="800" height="500" loading="lazy">
         <h3>Plato</h3><p>Gerçek setler, tek çatı.</p>
       </div>
     </div>
-    <p class="cap"><b>Bugün yapılabilen:</b> çekimden önce sahneyi görmek, storyboard canlandırmak, diziler ve plato etkinlikleri için tanıtım filmleri, atmosferik kısa filmler.</p>
+    <p class="cap"><b>Nerede kullanılır:</b> önce sosyal medya içerikleri ve tanıtım filmleri, sonra çekimden önce sahneyi görmek, zamanla dizi ve film içi planlar.</p>
     <p class="cap"><b>Neden şimdi:</b> yeni projelerin geliştirildiği dönem, çekimden önce sahneyi görmenin en çok işe yaradığı zamandır.</p>
   </div>
 </section>
@@ -437,9 +383,9 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
         <div class="mock__body">
           <div class="mock__side"><span>Projeler</span><span class="is-on">Çekimler</span><span>Karakterler</span><span>Mekânlar</span><span>Üretim sırası</span></div>
           <div class="mock__main">
-            <div class="shot pal-ember"><svg class="il" viewBox="0 0 320 180"><use href="#shot"/></svg><div class="shot__meta"><b>Otağ · gün batımı</b><span class="chip chip--ok">ONAYLANDI</span><div class="meter" style="--v:100%"><i></i></div></div></div>
-            <div class="shot pal-steel"><svg class="il" viewBox="0 0 320 180"><use href="#shot-city"/></svg><div class="shot__meta"><b>İstanbul · gece</b><span class="chip chip--run">ÜRETİLİYOR</span><div class="meter" style="--v:64%"><i></i></div></div></div>
-            <div class="shot pal-mute"><svg class="il" viewBox="20 70 180 101"><use href="#shot" width="320" height="180"/></svg><div class="shot__meta"><b>Oba · şafak</b><span class="chip chip--wait">SIRADA</span><div class="meter"><i></i></div></div></div>
+            <div class="shot pal-ember"><img class="il ph" src="../assets/kareler/atli.jpg" alt="Kuruluş Orhan: at üstünde, sancaklar arasında" width="640" height="360" loading="lazy"><div class="shot__meta"><b>Sefer · gün</b><span class="chip chip--ok">ONAYLANDI</span><div class="meter" style="--v:100%"><i></i></div></div></div>
+            <div class="shot pal-steel"><img class="il ph" src="../assets/kareler/otag.jpg" alt="Kuruluş Osman: otağın önünde toplanan oba" width="640" height="360" loading="lazy"><div class="shot__meta"><b>Otağ · tören</b><span class="chip chip--run">ÜRETİLİYOR</span><div class="meter" style="--v:64%"><i></i></div></div></div>
+            <div class="shot pal-mute"><img class="il ph" src="../assets/kareler/orman.jpg" alt="Kuruluş Osman: ormanda birlik" width="640" height="360" loading="lazy"><div class="shot__meta"><b>Orman · pusu</b><span class="chip chip--wait">SIRADA</span><div class="meter"><i></i></div></div></div>
           </div>
         </div>
       </div>
@@ -464,15 +410,60 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
         <li><svg viewBox="0 0 46 46" aria-hidden="true"><circle class="st" cx="23" cy="23" r="16"/><path class="fl-e" d="M19 15l12 8-12 8Z"/></svg><b>Çekim</b></li>
         <li><svg viewBox="0 0 46 46" aria-hidden="true"><path class="st" d="M8 23v0M14 17v12M20 11v24M26 15v16M32 9v28M38 19v8"/></svg><b>Ses</b></li>
         <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="5" y="15" width="15" height="16"/><rect class="st st-e" x="20" y="15" width="12" height="16"/><rect class="st" x="32" y="15" width="9" height="16"/><path class="st st-e" d="M26 8v30"/></svg><b>Kurgu</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="14" y="5" width="18" height="36" rx="2"/><path class="fl-e" d="M20 17l8 6-8 6Z"/><path class="st st-d" d="M20 36h6"/></svg><b>Yayın</b></li>
+        <li><svg viewBox="0 0 46 46" aria-hidden="true"><path class="st st-d" d="M7 7v32h32"/><rect class="st" x="13" y="25" width="6" height="14"/><rect class="st" x="22" y="18" width="6" height="21"/><rect class="fl-e" x="31" y="10" width="6" height="29"/></svg><b>Ölçüm</b></li>
       </ol>
     </div>
+    <p class="cap"><b>Yayın:</b> her film yatay ve dikey sürümüyle, başlığı, açıklaması, etiketi ve altyazısıyla hazırlanır. <b>Ölçüm:</b> izlenme verileri tek panelde toplanır. Üretim binanızda kalır; ölçüm için yalnızca yayın hesaplarınıza bağlanılır.</p>
   </div>
 </section>
 
 <!-- 4 -->
-<section class="scene" id="s4" data-name="ÜÇ YOL">
+<section class="scene" id="s4" data-name="PLATFORM">
   <div class="scene__in">
-    <p class="slug"><span class="slug__no">4</span><span class="slug__text">İÇ. TOPLANTI ODASI – GÜN</span><span class="slug__no">4</span></p>
+    <p class="slug"><span class="slug__no">4</span><span class="slug__text">İÇ. KURGU ODASI – YAKIN PLAN – EKRAN</span><span class="slug__no">4</span></p>
+    <p class="kind kind--ours">MASTERLABS'İN KURACAĞI SİSTEM</p>
+    <h2>Platform neler yapacak.</h2>
+    <p class="lede">Her özelliğin yanında, hangi perdede teslim edildiği yazar. İlk Film perdesinde platform yoktur; platform Perde 2'de başlar.</p>
+    <div class="feats">
+      <div class="feats__group"><h3>Üretim</h3>
+        <div class="feat"><b>Proje ve çekim listesi</b><p>Senaryo çekimlere bölünür; her çekimin durumu tek ekranda görünür.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Karakter ve mekân kütüphanesi</b><p>Arşivinizle eğitilmiş karakter, kostüm ve mekânlar çekimde listeden seçilir.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Storyboard ve anahtar kare</b><p>Metinden kare, onaylanan kareden hareketli çekim üretilir.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Üretim sırası</b><p>İşler donanımda sıraya girer; kimin işinin nerede olduğu görünür.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Motor seçimi</b><p>Her çekimde lokal ya da bulut motoru seçilir. Yeni model çıkınca platforma takılır.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Sürüm geçmişi</b><p>Her çekimin bütün denemeleri saklanır; eskisine dönülür, yan yana kıyaslanır.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Kurguya aktarım</b><p>Onaylanan çekimler, kullandığınız kurgu yazılımına hazır dosyalar olarak çıkar.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Türkçe ses</b><p>Dış ses ve seslendirme, ayrıca test edildikten sonra eklenir.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Senaryodan otomatik storyboard</b><p>Senaryo yüklenir, çekim listesi ve ilk kareler kendiliğinden çıkar.</p><span class="chip chip--p4">PERDE 4</span></div>
+      </div>
+      <div class="feats__group"><h3>Ekip</h3>
+        <div class="feat"><b>Çok kullanıcı ve roller</b><p>Yazar, sanat ekibi ve yönetmen aynı projede, kendi yetkisiyle çalışır.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Yönetmen onayı</b><p>Çekim onaylanır ya da notuyla birlikte geri döner.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Arayüzden model eğitimi</b><p>Yeni bir karakteri ya da mekânı ekibiniz, bize sormadan sisteme öğretir.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Kullanım kaydı</b><p>Kimin, hangi karakterle, neyi ürettiği kayıt altındadır.</p><span class="chip chip--p3">PERDE 3</span></div>
+      </div>
+      <div class="feats__group"><h3>Yayın ve ölçüm</h3>
+        <div class="feat"><b>Yatay ve dikey sürüm</b><p>Aynı film, televizyon ve sosyal medya ölçülerinde ayrı ayrı çıkar.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Başlık, açıklama, etiket, altyazı</b><p>Her film için öneri hazırlanır; son sözü ekibiniz söyler.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>Yapay zekâ etiketi kontrolü</b><p>Yayına çıkmadan önce, etiket isteyen platformlar için hatırlatır.</p><span class="chip chip--p2">PERDE 2</span></div>
+        <div class="feat"><b>İstatistik paneli</b><p>Yayın hesaplarınızdaki izlenme verileri tek ekranda toplanır.</p><span class="chip chip--p3">PERDE 3</span></div>
+        <div class="feat"><b>Veriden öneri</b><p>Hangi içerik türünün tuttuğu, sonraki üretim için öneriye dönüşür.</p><span class="chip chip--p4">PERDE 4</span></div>
+      </div>
+    </div>
+    <div class="grid grid--3">
+      <div class="card"><span class="tag tag--ember">HER ZAMAN</span><ul class="ticks"><li>Arşiv, modeller ve çıktılar binanızda durur</li><li>Tek bir modele bağlı değildir</li><li>Arayüz Türkçedir</li></ul></div>
+      <div class="card"><span class="tag">PLATFORMUN YAPMADIĞI</span><ul class="ticks"><li>Kurgu yazılımınızın yerine geçmez</li><li>Sosyal medyada kendisi paylaşım yapmaz</li><li>Tek tuşla bitmiş film çıkarmaz</li></ul></div>
+      <div class="card"><span class="tag">KEŞİFTE NETLEŞECEK</span><ul class="ticks"><li>Hangi kurgu yazılımına aktarılacağı</li><li>Hangi yayın hesaplarının bağlanacağı</li><li>Kaç kişinin kullanacağı</li></ul></div>
+    </div>
+    <p class="cap"><b>Bu liste bir yön çizer.</b> Perde 2'nin özellikleri keşiften sonra kesinleşir; sonraki perdelerinki, bir önceki perdede ekibinizin neyi kullandığına göre yeniden sıralanır.</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="scene" id="s5" data-name="ÜÇ YOL">
+  <div class="scene__in">
+    <p class="slug"><span class="slug__no">5</span><span class="slug__text">İÇ. TOPLANTI ODASI – GÜN</span><span class="slug__no">5</span></p>
     <p class="kind">SEÇENEKLER</p>
     <h2>Bu iş üç yoldan yapılır.</h2>
     <p class="lede">Fark, görüntünün nerede üretildiğidir.</p>
@@ -543,55 +534,23 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
   </div>
 </section>
 
-<!-- 5 -->
-<section class="scene" id="s5" data-name="NEDEN LOKAL">
+<!-- 6 -->
+<section class="scene" id="s6" data-name="NEDEN LOKAL">
   <div class="scene__in">
-    <p class="slug"><span class="slug__no">5</span><span class="slug__text">İÇ. ARŞİV ODASI – GÜN</span><span class="slug__no">5</span></p>
+    <p class="slug"><span class="slug__no">6</span><span class="slug__text">İÇ. ARŞİV ODASI – GÜN</span><span class="slug__no">6</span></p>
     <p class="kind">DEĞERLENDİRME</p>
     <h2>Lokali haklı çıkaran üç şey.</h2>
     <div class="grid grid--3">
       <div class="card reason">
-        <svg class="il" viewBox="0 0 200 120" aria-hidden="true">
-          <rect class="fl-h" width="200" height="120"/>
-          <path class="fl-i" d="M52 120q4-40 44-40t44 40Z"/><path class="st" d="M52 120q4-40 44-40t44 40"/>
-          <path class="fl-i" d="M78 50v20q3 10 18 15 15-5 18-15V50Z"/><path class="st st-d" d="M78 50v20q3 10 18 15 15-5 18-15V50"/>
-          <ellipse class="fl-h" cx="96" cy="56" rx="14" ry="17"/><ellipse class="st" cx="96" cy="56" rx="14" ry="17"/>
-          <path class="fl-e" d="M76 51q0-27 20-27t20 27Z"/><path class="st st-e" d="M96 24V13"/>
-          <path class="st w3" style="stroke:var(--ember)" d="M96 51v12"/>
-          <path class="st st-e" d="M64 28V16h12M116 16h12v12M128 80v12h-12M76 92H64V80"/>
-          <circle class="fl-e" cx="156" cy="40" r="15"/><path class="st w3" style="stroke:var(--ink)" d="M149 40l5 6 9-11"/>
-        </svg>
+        <img class="il ph" src="../assets/kareler/yuz.jpg" alt="Kuruluş Orhan: Orhan Bey yakın plan" width="600" height="360" loading="lazy">
         <h3>Oyuncu yüzleri</h3><p>Bulut servisleri gerçek kişileri engeller. Burada karar sizin.</p>
       </div>
       <div class="card reason">
-        <svg class="il" viewBox="0 0 200 120" aria-hidden="true">
-          <rect class="fl-h" width="200" height="120"/>
-          <!-- kılıçlar -->
-          <path class="st w5" d="M40 100L150 14"/><path class="st w5" d="M160 100L50 14"/>
-          <path class="st w5" style="stroke:var(--ember)" d="M46 80l18 22M154 80l-18 22"/>
-          <path class="st w5 st-d" d="M40 100l-10 8M160 100l10 8"/>
-          <!-- kalkan -->
-          <circle class="fl-i" cx="100" cy="62" r="34"/><circle class="st" cx="100" cy="62" r="34"/>
-          <circle class="st st-d" cx="100" cy="62" r="26"/>
-          <path class="st st-d" d="M100 36v52M74 62h52"/>
-          <circle class="fl-e" cx="100" cy="62" r="9"/>
-          <g class="fl-d"><circle cx="100" cy="32" r="2"/><circle cx="100" cy="92" r="2"/><circle cx="70" cy="62" r="2"/><circle cx="130" cy="62" r="2"/></g>
-        </svg>
+        <img class="il ph" src="../assets/kareler/savas.jpg" alt="Kuruluş Osman: savaş sahnesi" width="600" height="360" loading="lazy">
         <h3>Savaş sahneleri</h3><p>Tarihi aksiyon bulut filtrelerine takılır. Lokalde filtre yok.</p>
       </div>
       <div class="card reason">
-        <svg class="il pal-ember" viewBox="0 0 200 120" aria-hidden="true">
-          <rect class="fl-h" width="200" height="120"/>
-          <!-- arşiv kareleri -->
-          <rect class="fl-i" x="14" y="16" width="44" height="26"/><rect class="st st-d" x="14" y="16" width="44" height="26"/>
-          <rect class="fl-i" x="14" y="47" width="44" height="26"/><rect class="st st-d" x="14" y="47" width="44" height="26"/>
-          <rect class="fl-i" x="14" y="78" width="44" height="26"/><rect class="st st-d" x="14" y="78" width="44" height="26"/>
-          <path class="fl-d" d="M20 38l9-10 6 6 4-4 9 8Z"/><circle class="fl-d" cx="36" cy="60" r="7"/><path class="fl-d" d="M24 100v-6q12-12 24 0v6Z"/>
-          <!-- model ağı -->
-          <path class="st st-l" d="M58 29l26 13M58 60l26-18M58 60l26 18M58 91l26-13M84 42l26 18M84 78l26-18M84 42l26-12M84 78l26 12M110 30l22 30M110 90l22-30M110 60h22"/>
-          <g class="fl-e"><circle cx="84" cy="42" r="5"/><circle cx="84" cy="78" r="5"/><circle cx="110" cy="30" r="5"/><circle cx="110" cy="60" r="5"/><circle cx="110" cy="90" r="5"/></g>
-          <!-- üretilen kare -->
-          <svg x="136" y="42" width="54" height="36" viewBox="40 60 160 107"><use href="#shot" width="320" height="180"/></svg>
+        <img class="il ph" src="../assets/kareler/zirh.jpg" alt="Kuruluş Orhan: gece, işlemeli zırh" width="600" height="360" loading="lazy">
           <rect class="st st-e" x="136" y="42" width="54" height="36"/>
         </svg>
         <h3>Arşivle eğitim</h3><p>Kostümünüz ve dekorunuz modele öğretilir, kalıcı varlığınız olur.</p>
@@ -604,10 +563,10 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
   </div>
 </section>
 
-<!-- 6 -->
-<section class="scene" id="s6" data-name="YOL HARİTASI">
+<!-- 7 -->
+<section class="scene" id="s7" data-name="YOL HARİTASI">
   <div class="scene__in">
-    <p class="slug"><span class="slug__no">6</span><span class="slug__text">MONTAJ – BEŞ PERDE</span><span class="slug__no">6</span></p>
+    <p class="slug"><span class="slug__no">7</span><span class="slug__text">MONTAJ – BEŞ PERDE</span><span class="slug__no">7</span></p>
     <p class="kind kind--ours">MASTERLABS'İN ÖNERDİĞİ PLAN</p>
     <h2>Küçük başlar, sonuç gördükçe büyür.</h2>
     <p class="lede">Sütun yüksekliği yatırımın göreli büyüklüğüdür. Büyük harcama, sonuç görüldükten sonra gelir.</p>
@@ -631,26 +590,26 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
     <div class="acts">
       <div class="act"><span class="act__no">0</span><h3>Keşif</h3><p>Hedef ve pilot filmin konusu netleşir.</p></div>
       <div class="act"><span class="act__no">1</span><h3>İlk Film</h3><p>Donanım almadan 60-90 saniyelik film.</p></div>
-      <div class="act"><span class="act__no">2</span><h3>Stüdyo Çekirdeği</h3><p>İlk donanım, platformun ilk sürümü. Filmi sizin ekibiniz üretir.</p></div>
-      <div class="act"><span class="act__no">3</span><h3>Prodüksiyon Hattı</h3><p>Çok kullanıcı, Türkçe ses, yönetmen onayı, sunucu.</p></div>
-      <div class="act"><span class="act__no">4</span><h3>Ölçek</h3><p>Senaryodan otomatik storyboard. Diğer yapımlara hizmet, yeni gelir.</p></div>
+      <div class="act"><span class="act__no">2</span><h3>Stüdyo Çekirdeği</h3><p>İlk donanım, platformun ilk sürümü. Filmi sizin ekibiniz üretir, platform yayına hazırlar.</p></div>
+      <div class="act"><span class="act__no">3</span><h3>Prodüksiyon Hattı</h3><p>Çok kullanıcı, Türkçe ses, yönetmen onayı, sunucu, istatistik paneli.</p></div>
+      <div class="act"><span class="act__no">4</span><h3>Ölçek</h3><p>Senaryodan otomatik storyboard. İzlenme verisi sonraki üretimi yönlendirir. Diğer yapımlara hizmet.</p></div>
     </div>
   </div>
 </section>
 
-<!-- 7 -->
-<section class="scene" id="s7" data-name="İLK FİLM">
+<!-- 8 -->
+<section class="scene" id="s8" data-name="İLK FİLM">
   <div class="scene__in">
-    <p class="slug"><span class="slug__no">7</span><span class="slug__text">YAKIN PLAN – PERDE 1 – İLK FİLM</span><span class="slug__no">7</span></p>
+    <p class="slug"><span class="slug__no">8</span><span class="slug__text">YAKIN PLAN – PERDE 1 – İLK FİLM</span><span class="slug__no">8</span></p>
     <p class="kind kind--ours">MASTERLABS'İN İLK TESLİMATI</p>
     <h2>Pilotun sonunda izleyeceğiniz şey.</h2>
     <p class="lede">Kendi dünyanızda geçen, 60-90 saniyelik bir kısa film. Süre, arşiv elimize ulaştıktan sonra 4-6 haftadır.</p>
-    <figure class="player pal-ember" aria-label="Pilot sonunda izlenecek kısa filmi temsil eden oynatıcı">
+    <figure class="player pal-ember" aria-label="Pilotun sonunda teslim edilecek, henüz üretilmemiş kısa filmin künyesi">
       <div class="player__screen">
         <svg class="il" viewBox="0 18 320 136" aria-hidden="true"><use href="#shot" width="320" height="180"/></svg>
-        <span class="player__play"></span>
+        <span class="player__stamp"><b>HENÜZ ÜRETİLMEDİ</b>Pilotun sonunda burada sizin filminiz olacak</span>
       </div>
-      <div class="player__bar"><b>İLK FİLM</b><div class="meter"><i></i></div><span>00:00 / 01:30</span></div>
+      <div class="player__bar"><b>İLK FİLM</b><span>60-90 SN</span><span>DİYALOGSUZ</span><span>4-6 HAFTA</span></div>
     </figure>
     <p class="cap">Görsel temsilidir. Film, arşivinizden seçilen bir karakter ve bir mekânla üretilir.</p>
     <ol class="weeks">
@@ -661,34 +620,36 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
     </ol>
     <div class="grid grid--3">
       <div class="card"><span class="tag tag--ember">SİZDEN</span><ul class="ticks"><li>Bir karakter ve bir mekânın arşivi</li><li>Bir muhatap</li><li>Kullanım hakkı onayı</li></ul></div>
-      <div class="card"><span class="tag tag--ember">SİZE</span><ul class="ticks"><li>60-90 saniyelik film</li><li>Yüzsüz sahnelerin bulut servisiyle üretilmiş hâli, kıyas için</li><li>Donanım ölçüm raporu</li></ul></div>
-      <div class="card"><span class="tag">BU PERDEDE YOK</span><ul class="ticks"><li>Donanım alımı</li><li>Yazılım geliştirme</li><li>Diyaloglu sahne</li></ul></div>
+      <div class="card"><span class="tag tag--ember">SİZE</span><ul class="ticks"><li>60-90 saniyelik film</li><li>Sosyal medya için dikey sürümü ve 15 saniyelik kesiti</li><li>Yüzsüz sahnelerin bulut servisiyle üretilmiş hâli, kıyas için</li><li>Donanım ölçüm raporu</li></ul></div>
+      <div class="card"><span class="tag">BU PERDEDE YOK</span><ul class="ticks"><li>Donanım alımı</li><li>Yazılım geliştirme</li><li>Diyaloglu sahne</li><li>Yayın ve istatistik araçları</li></ul></div>
     </div>
     <p class="cap"><b>Pilotta veriniz nerede durur:</b> pilot kiralık donanımda yapılır. Seçilen arşiv görüntüleri bu süre için şirket dışındaki, yalnızca bizim eriştiğimiz bir sunucuya yüklenir ve pilot bitince silinir. Kalıcı kurulumda her şey binanızda kalır.</p>
   </div>
 </section>
 
-<!-- 8 -->
-<section class="scene" id="s8" data-name="RİSKLER">
+<!-- 9 -->
+<section class="scene" id="s9" data-name="RİSKLER">
   <div class="scene__in">
-    <p class="slug"><span class="slug__no">8</span><span class="slug__text">İÇ. HUKUK VE PLANLAMA – GÜN</span><span class="slug__no">8</span></p>
+    <p class="slug"><span class="slug__no">9</span><span class="slug__text">İÇ. HUKUK VE PLANLAMA – GÜN</span><span class="slug__no">9</span></p>
     <p class="kind">DEĞERLENDİRME</p>
     <h2>Riskler ve karşılığı.</h2>
     <div class="risks">
       <div class="risk"><h3>Oyuncu yüzü ve ses hakları</h3><p>Sözleşmeler keşifte incelenir. Pilot, izni net olanla yapılır.</p></div>
       <div class="risk"><h3>Model lisansları</h3><p>Yalnızca ticari kullanıma açık modeller seçilir.</p></div>
-      <div class="risk"><h3>Kalite beklentisi</h3><p>Dizi kalitesinde final görüntü vaat etmiyoruz. Pilot gerçek seviyeyi gösterir.</p></div>
+      <div class="risk"><h3>Kalite beklentisi</h3><p>Sıra bellidir: önce sosyal medya ve tanıtım, sonra dizi içi planlar. Dizi kalitesinde final görüntü vaat etmiyoruz.</p></div>
       <div class="risk"><h3>Türkçe seslendirme</h3><p>İlk film diyalogsuzdur. Ses, eklenmeden önce ayrıca test edilir.</p></div>
       <div class="risk"><h3>Teknolojinin hızı</h3><p>Platform tek modele bağlı değildir. Yenisi çıkınca takılır.</p></div>
+      <div class="risk"><h3>Yapay zekâ etiketi</h3><p>Sosyal platformlar gerçekçi yapay zekâ içeriğinde etiket ister. Yayın adımına etiket kontrolü eklenir.</p></div>
+      <div class="risk"><h3>Hesap erişim onayları</h3><p>İstatistik için platformların onayı haftalar sürebilir. Başvuru erkenden yapılır.</p></div>
       <div class="risk"><h3>Kapsamın büyümesi</h3><p>Her perdenin tek çıktısı vardır. Yeni istekler sonraki perdeye yazılır.</p></div>
     </div>
   </div>
 </section>
 
-<!-- 9 -->
-<section class="scene" id="s9" data-name="SONRAKİ ADIM">
+<!-- 10 -->
+<section class="scene" id="s10" data-name="SONRAKİ ADIM">
   <div class="scene__in">
-    <p class="slug"><span class="slug__no">9</span><span class="slug__text">İÇ. BEYKOZ – AYNI ODA – DEVAM</span><span class="slug__no">9</span></p>
+    <p class="slug"><span class="slug__no">10</span><span class="slug__text">İÇ. BEYKOZ – AYNI ODA – DEVAM</span><span class="slug__no">10</span></p>
     <p class="kind">SİZİN KARARINIZ</p>
     <h2>Sizden tek bir karar istiyoruz.</h2>
     <div class="ask">
@@ -699,7 +660,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
     <p class="fade">KARARMA.</p>
     <img class="logo" src="../assets/masterlabs-logo.png" alt="MasterLabs Technologies" width="1019" height="342">
     <p class="credits">MasterLabs tarafından Bozdağ Film için hazırlanmıştır. Kasım 2026.<br>Detayları konuşmak için: <a href="mailto:uzman@masterlabs.com.tr">uzman@masterlabs.com.tr</a> · <a href="tel:+905063396267" style="white-space:nowrap">0506 339 62 67</a></p>
-    <p class="credits">Süreler ve ölçekler ön değerlendirmedir, keşif sonrasında kesinleşir.<br><a href="../hikaye/">Kısa hikâye sürümünü açın</a></p>
+    <p class="credits">Süreler ve ölçekler ön değerlendirmedir, keşif sonrasında kesinleşir. Dizi kareleri: Kuruluş Osman ve Kuruluş Orhan, Bozdağ Film. Plato fotoğrafı: Klook tur sayfası.<br><a href="../hikaye/">Kısa hikâye sürümünü açın</a></p>
   </div>
 </section>
 
@@ -710,7 +671,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
   var tc = document.getElementById('tc'), where = document.getElementById('where'),
       progress = document.getElementById('progress'),
       scenes = Array.prototype.slice.call(document.querySelectorAll('.scene')),
-      RUNTIME = 3 * 60, FPS = 24, ticking = false;
+      RUNTIME = 5 * 60, FPS = 24, ticking = false;
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function update() {
     ticking = false;
