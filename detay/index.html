@@ -244,6 +244,12 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 .fade { text-align: right; font: 700 15px/1 var(--script); letter-spacing: .08em; color: var(--dust); }
 .credits { font: 400 13px/1.6 var(--script); color: var(--dust); }
 .logo { display: block; width: 230px; max-width: 62%; height: auto; margin-top: 8px; }
+.logo--top { width: 210px; margin-top: 0; }
+.brandrow { display: flex; align-items: center; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; }
+.badge { font: 700 13px/1.3 var(--script); letter-spacing: .1em; padding: 9px 12px; background: var(--ember); color: var(--ink); }
+/* Sayfa türü etiketi: dolgulu = MasterLabs'in yapacağı iş, çerçeveli = bağlam ve karar */
+.kind { align-self: flex-start; font: 700 12px/1.3 var(--script); letter-spacing: .1em; padding: 7px 10px; border: 1px solid var(--dust); color: var(--dust); margin-bottom: -8px; }
+.kind--ours { background: var(--ember); border-color: var(--ember); color: var(--ink); }
 </style>
 </head>
 <body>
@@ -295,6 +301,10 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <!-- 1 -->
 <section class="scene hero" id="s1" data-name="AÇILIŞ">
   <div class="scene__in">
+    <div class="brandrow">
+      <img class="logo logo--top" src="../assets/masterlabs-logo.png" alt="MasterLabs Technologies" width="1019" height="342">
+      <span class="badge">PROJE ÖNERİSİ · BOZDAĞ FİLM İÇİN</span>
+    </div>
     <p class="slug"><span class="slug__no">1</span><span class="slug__text">İÇ. BEYKOZ – YENİ BİR STÜDYO – GÜN</span><span class="slug__no">1</span></p>
     <div class="hero__top">
       <div class="hero__text">
@@ -340,6 +350,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s2" data-name="FIRSAT">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">2</span><span class="slug__text">DIŞ. RİVA PLATOSU – ŞAFAK</span><span class="slug__no">2</span></p>
+    <p class="kind">SİZDE OLAN</p>
     <h2>Araçlar herkeste var. Bu dünya yalnızca sizde.</h2>
     <div class="grid grid--3">
       <div class="card">
@@ -417,7 +428,9 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s3" data-name="NE KURUYORUZ">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">3</span><span class="slug__text">İÇ. KURGU ODASI – GECE</span><span class="slug__no">3</span></p>
+    <p class="kind kind--ours">MASTERLABS'İN KURACAĞI SİSTEM</p>
     <h2>Bir motor, üstünde bir platform.</h2>
+    <p class="lede">MasterLabs bu iki parçayı kurar, ekibinize teslim eder ve kullanmayı öğretir.</p>
     <div class="build" role="img" aria-label="Üstte ekibin kullandığı platform ekranı, altta görüntüyü üreten motor">
       <div class="mock">
         <div class="mock__bar"><i></i><i></i><i></i><span>OTAĞ · PLATFORM · Çekimler</span></div>
@@ -460,6 +473,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s4" data-name="ÜÇ YOL">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">4</span><span class="slug__text">İÇ. TOPLANTI ODASI – GÜN</span><span class="slug__no">4</span></p>
+    <p class="kind">SEÇENEKLER</p>
     <h2>Bu iş üç yoldan yapılır.</h2>
     <p class="lede">Fark, görüntünün nerede üretildiğidir.</p>
     <div class="routes">
@@ -533,6 +547,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s5" data-name="NEDEN LOKAL">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">5</span><span class="slug__text">İÇ. ARŞİV ODASI – GÜN</span><span class="slug__no">5</span></p>
+    <p class="kind">DEĞERLENDİRME</p>
     <h2>Lokali haklı çıkaran üç şey.</h2>
     <div class="grid grid--3">
       <div class="card reason">
@@ -593,6 +608,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s6" data-name="YOL HARİTASI">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">6</span><span class="slug__text">MONTAJ – BEŞ PERDE</span><span class="slug__no">6</span></p>
+    <p class="kind kind--ours">MASTERLABS'İN ÖNERDİĞİ PLAN</p>
     <h2>Küçük başlar, sonuç gördükçe büyür.</h2>
     <p class="lede">Sütun yüksekliği yatırımın göreli büyüklüğüdür. Büyük harcama, sonuç görüldükten sonra gelir.</p>
     <div>
@@ -626,6 +642,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s7" data-name="İLK FİLM">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">7</span><span class="slug__text">YAKIN PLAN – PERDE 1 – İLK FİLM</span><span class="slug__no">7</span></p>
+    <p class="kind kind--ours">MASTERLABS'İN İLK TESLİMATI</p>
     <h2>Dört hafta sonra izleyeceğiniz şey.</h2>
     <p class="lede">Kendi dünyanızda geçen, 60-90 saniyelik bir kısa film.</p>
     <figure class="player pal-ember" aria-label="Pilot sonunda izlenecek kısa filmi temsil eden oynatıcı">
@@ -654,6 +671,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s8" data-name="RİSKLER">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">8</span><span class="slug__text">İÇ. HUKUK VE PLANLAMA – GÜN</span><span class="slug__no">8</span></p>
+    <p class="kind">DEĞERLENDİRME</p>
     <h2>Riskler ve karşılığı.</h2>
     <div class="risks">
       <div class="risk"><h3>Oyuncu yüzü ve ses hakları</h3><p>Sözleşmeler keşifte incelenir. Pilot, izni net olanla yapılır.</p></div>
@@ -670,6 +688,7 @@ td.g::before { background: var(--good); } td.b::before { background: var(--bad);
 <section class="scene" id="s9" data-name="SONRAKİ ADIM">
   <div class="scene__in">
     <p class="slug"><span class="slug__no">9</span><span class="slug__text">İÇ. BEYKOZ – AYNI ODA – DEVAM</span><span class="slug__no">9</span></p>
+    <p class="kind">SİZİN KARARINIZ</p>
     <h2>Sizden tek bir karar istiyoruz.</h2>
     <div class="ask">
       <span class="tag tag--ember">İSTENEN KARAR</span>

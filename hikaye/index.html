@@ -85,7 +85,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
 .cover h1 { font: 800 6.6em/.82 var(--display); letter-spacing: -.01em; }
 .cover h1 span { color: var(--ember); }
 .cover .sub { font: 600 1.75em/1.12 var(--display); text-wrap: balance; }
-.cover .il { max-height: 36cqh; }
+.cover .il { max-height: 30cqh; }
 .hint { font: 700 .8em/1.4 var(--script); letter-spacing: .08em; color: var(--dust); }
 .hint b { color: var(--ember); }
 
@@ -188,6 +188,12 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
 .fade { text-align: right; font: 700 .9em/1 var(--script); letter-spacing: .08em; color: var(--dust); }
 .credits { font: 400 .78em/1.6 var(--script); color: var(--dust); }
 .logo { display: block; width: 12.5em; max-width: 62%; height: auto; }
+.brandrow { display: flex; align-items: center; justify-content: space-between; gap: .6em 1em; flex-wrap: wrap; }
+.brandrow .logo { width: 9.5em; max-width: 46%; }
+.badge { font: 700 .74em/1.3 var(--script); letter-spacing: .08em; padding: .55em .7em; background: var(--ember); color: var(--ink); }
+/* Ekran türü etiketi: dolgulu = MasterLabs'in yapacağı iş, çerçeveli = bağlam ve karar */
+.kind { align-self: flex-start; font: 700 .72em/1.3 var(--script); letter-spacing: .1em; padding: .45em .65em; border: 1px solid var(--dust); color: var(--dust); margin-bottom: -.35em; }
+.kind--ours { background: var(--ember); border-color: var(--ember); color: var(--ink); }
 </style>
 </head>
 <body>
@@ -239,6 +245,10 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
 
       <!-- 1 Kapak -->
       <section class="slide cover"><div class="in">
+        <div class="brandrow">
+          <img class="logo" src="../assets/masterlabs-logo.png" alt="MasterLabs Technologies" width="1019" height="342">
+          <span class="badge">PROJE ÖNERİSİ</span>
+        </div>
         <p class="slug">İÇ. BEYKOZ – YENİ BİR STÜDYO – GÜN</p>
         <svg class="il" viewBox="0 0 400 320" role="img" aria-label="Vizörden görünen bir otağ çadırı">
           <path class="st st-d" d="M20 50V20h30M350 20h30v30M380 270v30h-30M50 300H20v-30"/>
@@ -260,12 +270,13 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
         </svg>
         <h1>OTA<span>Ğ</span></h1>
         <p class="sub">Bozdağ Film'in kendi dünyasını, kendi çatısı altında üreten yapay zekâ stüdyosu.</p>
-        <p class="hint">MasterLabs proje önerisi · 13 ekran<br><b>Dokunun ya da kaydırın →</b></p>
+        <p class="hint">Bozdağ Film için hazırlandı · 13 ekran<br><b>Dokunun ya da kaydırın →</b></p>
       </div></section>
 
       <!-- 2 Fırsat -->
       <section class="slide"><div class="in">
         <p class="slug">DIŞ. RİVA PLATOSU – ŞAFAK</p>
+        <p class="kind">SİZDE OLAN</p>
         <h2>Araçlar herkeste var. Bu dünya yalnızca sizde.</h2>
         <div class="rows">
           <div class="row">
@@ -319,6 +330,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 3 Ne kuruyoruz -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. KURGU ODASI – GECE</p>
+        <p class="kind kind--ours">MASTERLABS'İN KURACAĞI SİSTEM</p>
         <h2>Bir motor, üstünde bir platform.</h2>
         <div>
           <div class="mock">
@@ -339,12 +351,13 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
             </div>
           </div>
         </div>
-        <p class="cap"><b>Motor</b> görüntüyü üretir: arşivinizle eğitilmiş modeller, kendi donanımınızda. <b>Platform</b> ekibinizin kullandığı arayüzdür.</p>
+        <p class="cap"><b>Motor</b> görüntüyü üretir: arşivinizle eğitilmiş modeller, kendi donanımınızda. <b>Platform</b> ekibinizin kullandığı arayüzdür. İkisini de MasterLabs kurar ve ekibinize teslim eder.</p>
       </div></section>
 
       <!-- 4 Zincir -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. KURGU ODASI – DEVAM</p>
+        <p class="kind kind--ours">MASTERLABS'İN KURACAĞI SİSTEM</p>
         <h2>Tek tuş değil, bir zincir.</h2>
         <ol class="chain">
           <li><svg viewBox="0 0 46 46" aria-hidden="true"><rect class="st" x="11" y="6" width="24" height="34"/><path class="st st-d" d="M16 14h14M16 20h14M16 26h9"/></svg><div><i>01</i><b>Senaryo</b></div></li>
@@ -361,6 +374,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 5 Üç yol -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. TOPLANTI ODASI – GÜN</p>
+        <p class="kind">SEÇENEKLER</p>
         <h2>Bu iş üç yoldan yapılır.</h2>
         <p class="dim">Fark, görüntünün nerede üretildiğidir.</p>
         <div class="rows">
@@ -407,6 +421,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 6 Yan yana -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. TOPLANTI ODASI – DEVAM</p>
+        <p class="kind">SEÇENEKLER</p>
         <h2>Üç yol, yan yana.</h2>
         <table class="dots">
           <thead><tr><th></th><th scope="col">BULUT</th><th scope="col">KİRALIK</th><th scope="col" class="c">LOKAL</th></tr></thead>
@@ -429,6 +444,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 7 Neden lokal -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. ARŞİV ODASI – GÜN</p>
+        <p class="kind">DEĞERLENDİRME</p>
         <h2>Lokali haklı çıkaran üç şey.</h2>
         <div class="rows">
           <div class="row">
@@ -476,6 +492,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 8 Yol haritası -->
       <section class="slide"><div class="in">
         <p class="slug">MONTAJ – BEŞ PERDE</p>
+        <p class="kind kind--ours">MASTERLABS'İN ÖNERDİĞİ PLAN</p>
         <h2>Küçük başlar, sonuç gördükçe büyür.</h2>
         <div>
           <div class="steps" role="img" aria-label="Perdelerin göreli yatırım büyüklüğü: Perde 0 en küçük, Perde 3 en büyük, Perde 4 değişken">
@@ -500,6 +517,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 9 Perdeler -->
       <section class="slide"><div class="in">
         <p class="slug">MONTAJ – DEVAM</p>
+        <p class="kind kind--ours">MASTERLABS'İN ÖNERDİĞİ PLAN</p>
         <h2>Her perde bir filmle biter.</h2>
         <ol class="acts">
           <li><b>0</b><h3>Keşif <small>1 hafta</small></h3><p>Hedef ve pilotun konusu netleşir.</p></li>
@@ -513,6 +531,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 10 İlk film -->
       <section class="slide"><div class="in">
         <p class="slug">YAKIN PLAN – PERDE 1</p>
+        <p class="kind kind--ours">MASTERLABS'İN İLK TESLİMATI</p>
         <h2>Dört hafta sonra izleyeceğiniz şey.</h2>
         <figure class="player pal-ember" aria-label="Pilot sonunda izlenecek kısa filmi temsil eden oynatıcı">
           <div class="player__screen">
@@ -533,6 +552,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 11 Sizden / size -->
       <section class="slide"><div class="in">
         <p class="slug">YAKIN PLAN – DEVAM</p>
+        <p class="kind kind--ours">MASTERLABS'İN İLK TESLİMATI</p>
         <h2>İlk perdede ne var, ne yok.</h2>
         <div class="box"><span class="tag">SİZDEN</span><ul class="ticks"><li>Bir karakter ve bir mekânın arşivi</li><li>Bir muhatap</li><li>Kullanım hakkı onayı</li></ul></div>
         <div class="box"><span class="tag">SİZE</span><ul class="ticks"><li>60-90 saniyelik film</li><li>Aynı sahnenin bulut sürümü, kıyas için</li><li>Donanım ölçüm raporu</li></ul></div>
@@ -542,6 +562,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 12 Riskler -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. HUKUK VE PLANLAMA – GÜN</p>
+        <p class="kind">DEĞERLENDİRME</p>
         <h2>Riskler ve karşılığı.</h2>
         <ul class="risks">
           <li><h3>Oyuncu yüzü ve ses hakları</h3><p>Sözleşmeler keşifte incelenir.</p></li>
@@ -556,6 +577,7 @@ h3 { font: 600 1.4em/1.1 var(--display); letter-spacing: .02em; }
       <!-- 13 Karar -->
       <section class="slide"><div class="in">
         <p class="slug">İÇ. BEYKOZ – AYNI ODA – DEVAM</p>
+        <p class="kind">SİZİN KARARINIZ</p>
         <h2>Sizden tek bir karar istiyoruz.</h2>
         <div class="ask">
           <span class="tag">İSTENEN KARAR</span>
